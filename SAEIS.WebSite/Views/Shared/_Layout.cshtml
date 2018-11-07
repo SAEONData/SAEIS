@@ -1,0 +1,130 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html lang="en-za">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    @*<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128063984-3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-128063984-3');
+        </script>*@
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @RenderSection("MetaTags", required: false)
+    @if (!string.IsNullOrWhiteSpace(ViewBag.MetaDescription))
+    {
+        <meta name="description" content="@ViewBag.MetaDescription" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewBag.MetaKeywords))
+    {
+        <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    }
+    <title>@(ViewBag.Title == "Estuary Information Service" || string.IsNullOrEmpty(ViewBag.Title) ? "Estuary Information Service" : "Estuary Information Service - " + @ViewBag.Title)</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/node_modules/mdbootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/node_modules/mdbootstrap/css/mdb.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/SAEON.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/node_modules/mdbootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/node_modules/mdbootstrap/css/mdb.min.css" />
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="~/css/SAEON.min.css" />
+    </environment>
+    @RenderSection("Styles", required: false)
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body class="bg-SAEON" id="Body">
+    <div id="Page" class="container-fluid bg-white text-dark rounded">
+        <header id="Header">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <img class="Logo img-fluid" src="~/Images/Banner.jpg" alt="SAEON Banner" title="© SAEON" />
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-SAEON rounded">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Search">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Background">Background</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Acknowledgements">Acknowledgements</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Researchers">Researchers</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Links">Links</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About SAEON</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact SAEON</a></li>
+                    </ul>
+                    @*<ul class="navbar-nav ml-auto">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item"><span class="nav-link" style="padding-right: 15px;"><b><i>Welcome, @User.Identity.Name</i></b></span></li>
+                            }
+                            @await Html.PartialAsync("_ConfigPartial")
+                            @await Html.PartialAsync("_LoginPartial")
+                        </ul>*@
+                </div>
+            </nav>
+            @*<partial name="_CookieConsentPartial" />*@
+            <br />
+            <h1>
+                @if (ViewBag.Title == "Estuary Information Service" || string.IsNullOrWhiteSpace(ViewBag.Title))
+                {
+                    <text>Estuary Information Service</text>
+                }
+                else
+                {
+                    <text>Estuary Information Service</text> @:&ndash; @ViewBag.Title
+                    if (!string.IsNullOrWhiteSpace(ViewBag.Description))
+                    {
+                        <small>@Html.Raw(ViewBag.Description)</small>
+                    }
+                }
+            </h1>
+        </header>
+        <div id="Body">
+            @RenderBody()
+        </div>
+        <footer id="Footer">
+            <div class="row">
+                <div class="col-12">
+                    &copy; @DateTime.Now.Year - South African Environmental Observation Network (SAEON)<br />
+                    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                        <img alt="Creative Commons License" class="image-respoonsive footer-left-image" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+                    </a>
+                    <br />
+                    <div style="clear: both">
+                        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Identity Service</span> is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <environment names="Development">
+        <script src="~/node_modules/mdbootstrap/js/jquery-3.3.1.min.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/popper.min.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/bootstrap.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/mdb.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/node_modules/mdbootstrap/js/jquery-3.3.1.min.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/popper.min.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/bootstrap.min.js"></script>
+        <script src="~/node_modules/mdbootstrap/js/mdb.min.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
