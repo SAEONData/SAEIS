@@ -11,21 +11,25 @@ namespace SAEIS.WebSite.Controllers
             return View();
         }
 
+        [Route("About")]
         public IActionResult About()
         {
             return View();
         }
 
+        [Route("Acknowledgements")]
         public IActionResult Acknowledgements()
         {
             return View();
         }
 
+        [Route("Background")]
         public IActionResult Background()
         {
             return View();
         }
 
+        [Route("Contact")]
         public IActionResult Contact()
         {
             return View();
@@ -37,22 +41,20 @@ namespace SAEIS.WebSite.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Route("Links")]
         public IActionResult Links()
         {
             return View();
         }
 
+        [Route("Privacy")]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [Route("Researchers")]
         public IActionResult Researchers()
-        {
-            return View();
-        }
-
-        public IActionResult Search()
         {
             return View();
         }

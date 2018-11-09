@@ -10,15 +10,28 @@
     <Product>South African Estuary Information System (SAEIS)</Product>
     <Description>The South African Estuary Information System (SAEIS) is a web-based resource, providing details of research, monitoring and management associated with South African estuaries.</Description>
     <Copyright>© 2018 South African Environmental Observation Network (SAEON)</Copyright>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\js\Search.ts" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
     <PackageReference Include="SAEON.Logs" Version="1.0.33" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAEIS.Data\SAEIS.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\js\Search.ts" />
   </ItemGroup>
 
   <ItemGroup>

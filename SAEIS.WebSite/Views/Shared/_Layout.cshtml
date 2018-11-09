@@ -23,7 +23,7 @@
     {
         <meta name="keywords" content="@ViewBag.MetaKeywords" />
     }
-    <title>@(ViewBag.Title == "Estuary Information Service" || string.IsNullOrEmpty(ViewBag.Title) ? "Estuary Information Service" : "Estuary Information Service - " + @ViewBag.Title)</title>
+    <title>@(ViewBag.Title == "South African Estuary Information System" || string.IsNullOrEmpty(ViewBag.Title) ? "South African Estuary Information System" : "South African Estuary Information System - " + @ViewBag.Title)</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
 
@@ -57,7 +57,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Search">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Search" asp-action="Index">Search</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Background">Background</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Acknowledgements">Acknowledgements</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Researchers">Researchers</a></li>
@@ -78,13 +78,13 @@
             @*<partial name="_CookieConsentPartial" />*@
             <br />
             <h1>
-                @if (ViewBag.Title == "Estuary Information Service" || string.IsNullOrWhiteSpace(ViewBag.Title))
+                @if (ViewBag.Title == "South African Estuary Information System" || string.IsNullOrWhiteSpace(ViewBag.Title))
                 {
-                    <text>Estuary Information Service</text>
+                    <text>South African Estuary Information System</text>
                 }
                 else
                 {
-                    <text>Estuary Information Service</text> @:&ndash; @ViewBag.Title
+                    <text>South African Estuary Information System</text> @:&ndash; @ViewBag.Title
                     if (!string.IsNullOrWhiteSpace(ViewBag.Description))
                     {
                         <small>@Html.Raw(ViewBag.Description)</small>

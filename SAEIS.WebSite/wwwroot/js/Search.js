@@ -1,0 +1,146 @@
+var Search;
+(function (Search) {
+    // Errors
+    function ShowWaiting() {
+        //let wp = $("#waiting").data("ejWaitingPopup");
+        //wp.show();
+    }
+    Search.ShowWaiting = ShowWaiting;
+    function HideWaiting() {
+        //let wp = $("#waiting").data("ejWaitingPopup");
+        //wp.hide();
+    }
+    Search.HideWaiting = HideWaiting;
+    function ErrorInFunc(method, status, error) {
+        HideWaiting();
+        alert("Error in " + method + " Status: " + status + " Error: " + error);
+    }
+    function DrawTable(filters) {
+        if (!filters) {
+            filters = GetFilters();
+        }
+        google.charts.load('current', { 'packages': ['table'] });
+        google.charts.setOnLoadCallback(drawTable);
+        function drawTable() {
+            $.post("/Search/GetTableData", filters)
+                .done(function (json) {
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', '#');
+                data.addColumn('string', 'Name');
+                data.addColumn('string', 'Province');
+                data.addColumn('string', 'Classification');
+                var dataValues = json;
+                for (var i = 0; i < dataValues.length; i++) {
+                    data.addRow([dataValues[i].id, dataValues[i].name, dataValues[i].province, dataValues[i].classification]);
+                }
+                var table = new google.visualization.Table(document.getElementById('table_div'));
+                table.draw(data, { allowHtml: true, width: '100%', height: '100%' });
+            })
+                .fail(function (jqXHR, status, error) {
+                ErrorInFunc("GetTableData", status, error);
+            });
+        }
+    }
+    Search.DrawTable = DrawTable;
+    var map;
+    var markers = [];
+    var mapPoints;
+    var mapBounds;
+    var mapFitted = false;
+    function InitMap() {
+        var mapOpts = {
+            center: new google.maps.LatLng(-34, 25.5),
+            zoom: 5
+        };
+        map = new google.maps.Map(document.getElementById('mapLocations'), mapOpts);
+        UpdateMap(GetFilters());
+        FitMap();
+    }
+    Search.InitMap = InitMap;
+    function UpdateMap(filters) {
+        if (!filters) {
+            filters = GetFilters();
+        }
+        $.post("/Search/GetMapData", filters)
+            .done(function (json) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+            mapPoints = json;
+            mapBounds = new google.maps.LatLngBounds();
+            for (var i = 0; i < mapPoints.length; i++) {
+                var mapPoint = mapPoints[i];
+                var marker = new google.maps.Marker({
+                    position: { lat: mapPoint.latitude, lng: mapPoint.longitude },
+                    map: map,
+                    title: mapPoint.name
+                });
+                markers.push(marker);
+                mapBounds.extend(marker.getPosition());
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                //if (mapPoint.IsSelected) {
+                //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                //}
+                //else {
+                //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                //}
+            }
+        })
+            .fail(function (jqXHR, status, error) {
+            ErrorInFunc("UpdateMap", status, error);
+        });
+    }
+    Search.UpdateMap = UpdateMap;
+    function FitMap(override) {
+        if (override === void 0) { override = false; }
+        if (override || (!mapFitted && (mapBounds != null) && !mapBounds.isEmpty())) {
+            map.setCenter(mapBounds.getCenter());
+            map.fitBounds(mapBounds);
+            mapFitted = true;
+        }
+    }
+    Search.FitMap = FitMap;
+    function FixMap() {
+        UpdateMap(GetFilters());
+        FitMap(true);
+    }
+    Search.FixMap = FixMap;
+    // Filter updates
+    var Filters = /** @class */ (function () {
+        function Filters() {
+        }
+        return Filters;
+    }());
+    function GetFilters() {
+        var filters = new Filters();
+        var name = $("#Name").val();
+        if (name != "") {
+            filters.name = name;
+        }
+        var classification = $("#Classification").val();
+        if (classification) {
+            filters.classification = classification;
+        }
+        var region = $("#Region").val();
+        if (region) {
+            filters.region = region;
+        }
+        var condition = $("#Condition").val();
+        if (condition) {
+            filters.condition = condition;
+        }
+        var province = $("#Province").val();
+        if (province) {
+            filters.province = province;
+        }
+        return filters;
+    }
+    function UpdateFilters() {
+        var filters = GetFilters();
+        DrawTable(filters);
+        UpdateMap(filters);
+    }
+    Search.UpdateFilters = UpdateFilters;
+})(Search || (Search = {}));
+//# sourceMappingURL=Search.js.map

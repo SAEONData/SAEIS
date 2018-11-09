@@ -318,3 +318,4 @@ Logs/
 *.[sS]ecrets.config
 [sS]ecrets.*.json
 [sS]ecrets.*.config
+SAEISArchive/

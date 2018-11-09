@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using SAEIS.Data;
 using SAEON.Logs;
 using System;
 using System.IO;
@@ -36,6 +38,11 @@ namespace SAEIS.WebSite
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
+
+                    var connectionString = Configuration.GetConnectionString("SAEIS");
+                    services.AddDbContext<SAEISDbContext>(options => options.UseSqlServer(connectionString));
+                    //var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+                    //services.AddDbContext<SAEONDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
 
                     services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
                     services.AddLogging();
