@@ -2,13 +2,11 @@
     // Errors
 
     export function ShowWaiting() {
-        //let wp = $("#waiting").data("ejWaitingPopup");
-        //wp.show();
+        //$("#modalLoading").modal("show");
     }
 
     export function HideWaiting() {
-        //let wp = $("#waiting").data("ejWaitingPopup");
-        //wp.hide();
+        //$("#modalLoading").modal("hide");
     }
 
     function ErrorInFunc(method: string, status: string, error: string) {
@@ -25,7 +23,7 @@
         classification: string;
     }
 
-    export function DrawTable(filters: Filters) {
+    function DrawTable(filters: Filters) {
         if (!filters) {
             filters = GetFilters();
         }
@@ -47,7 +45,7 @@
                         data.addRow([dataValues[i].id, dataValues[i].name, dataValues[i].province, dataValues[i].classification]);
                     }
                     var table = new google.visualization.Table(document.getElementById('table_div'));
-                    table.draw(data, { allowHtml: true, width: '100%', height: '100%' });
+                    table.draw(data, { allowHtml: true, width: '100%', height: '100%', page: 'enable', pageSize: 25 });
                 })
                 .fail(function (jqXHR, status, error) {
                     ErrorInFunc("GetTableData", status, error)
@@ -82,7 +80,7 @@
         FitMap();
     }
 
-    export function UpdateMap(filters: Filters) {
+    function UpdateMap(filters: Filters) {
         if (!filters) {
             filters = GetFilters();
         }
@@ -104,12 +102,6 @@
                     markers.push(marker);
                     mapBounds.extend(marker.getPosition());
                     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-                    //if (mapPoint.IsSelected) {
-                    //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-                    //}
-                    //else {
-                    //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-                    //}
                 }
             })
             .fail(function (jqXHR, status, error) {
@@ -166,8 +158,10 @@
     }
 
     export function UpdateFilters() {
+        ShowWaiting();
         let filters = GetFilters();
         DrawTable(filters);
         UpdateMap(filters);
+        setTimeout(HideWaiting(),2000);
     }
 }

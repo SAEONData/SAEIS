@@ -1,13 +1,69 @@
 ﻿@model SAEIS.WebSite.Models.InfoViewModel
 <div class="row">
     <div class="col-md">
-        <div class="m-4">
-            1
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Classification</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Classification.Type" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.Classification.Type" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ClassificationDate" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ClassificationDate" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Region.Category" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.Region.Category" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Geomorphology.Category" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.Geomorphology.Category" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.InfoAvailable.Category" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.InfoAvailable.Category" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WaterQuality.Category" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.WaterQuality.Category" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md">
-        <div class="p-4">
-            2
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Condition</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Condition.Type" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.Condition.Type" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Condition.ShortDescription" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.Condition.ShortDescription" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Condition.LongDescription" class="col-md-3 col-form-label"></label>
+                            <textarea asp-for="Estuary.Condition.LongDescription" class="col-md form-control mr-3" rows="3" readonly></textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ConditionDate" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ConditionDate" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ConditionRemarks" class="col-md-3 col-form-label"></label>
+                            <textarea asp-for="Estuary.ConditionRemarks" class="col-md form-control mr-3" rows="3" readonly></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

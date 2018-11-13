@@ -2,13 +2,11 @@ var Search;
 (function (Search) {
     // Errors
     function ShowWaiting() {
-        //let wp = $("#waiting").data("ejWaitingPopup");
-        //wp.show();
+        //$("#modalLoading").modal("show");
     }
     Search.ShowWaiting = ShowWaiting;
     function HideWaiting() {
-        //let wp = $("#waiting").data("ejWaitingPopup");
-        //wp.hide();
+        //$("#modalLoading").modal("hide");
     }
     Search.HideWaiting = HideWaiting;
     function ErrorInFunc(method, status, error) {
@@ -34,14 +32,13 @@ var Search;
                     data.addRow([dataValues[i].id, dataValues[i].name, dataValues[i].province, dataValues[i].classification]);
                 }
                 var table = new google.visualization.Table(document.getElementById('table_div'));
-                table.draw(data, { allowHtml: true, width: '100%', height: '100%' });
+                table.draw(data, { allowHtml: true, width: '100%', height: '100%', page: 'enable', pageSize: 25 });
             })
                 .fail(function (jqXHR, status, error) {
                 ErrorInFunc("GetTableData", status, error);
             });
         }
     }
-    Search.DrawTable = DrawTable;
     var map;
     var markers = [];
     var mapPoints;
@@ -79,19 +76,12 @@ var Search;
                 markers.push(marker);
                 mapBounds.extend(marker.getPosition());
                 marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-                //if (mapPoint.IsSelected) {
-                //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-                //}
-                //else {
-                //    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-                //}
             }
         })
             .fail(function (jqXHR, status, error) {
             ErrorInFunc("UpdateMap", status, error);
         });
     }
-    Search.UpdateMap = UpdateMap;
     function FitMap(override) {
         if (override === void 0) { override = false; }
         if (override || (!mapFitted && (mapBounds != null) && !mapBounds.isEmpty())) {
@@ -137,9 +127,11 @@ var Search;
         return filters;
     }
     function UpdateFilters() {
+        ShowWaiting();
         var filters = GetFilters();
         DrawTable(filters);
         UpdateMap(filters);
+        setTimeout(HideWaiting(), 2000);
     }
     Search.UpdateFilters = UpdateFilters;
 })(Search || (Search = {}));

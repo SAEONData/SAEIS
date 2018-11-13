@@ -1,20 +1,48 @@
 ﻿@model SAEIS.WebSite.Models.InfoViewModel
 <div class="row">
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Title</h5>
-                <p class="card-text">text</p>
-                <a href="#" class="btn btn-primary"></a>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Uses</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.PercentAgriculture" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.PercentAgriculture" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">%</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.PercentDegraded" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.PercentDegraded" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">%</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.PercentNatural" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.PercentNatural" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">%</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.PercentUrban" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.PercentUrban" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">%</label>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Title</h5>
-                <p class="card-text">text</p>
-                <a href="#" class="btn btn-primary"></a>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Reference</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.LandCoverReference" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.LandCoverReference" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

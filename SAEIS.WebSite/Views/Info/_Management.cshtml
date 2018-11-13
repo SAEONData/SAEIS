@@ -1,0 +1,96 @@
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Rehabilitation Information</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.SanctuaryProtection.RecommendedExtent" class="col-md-5 col-form-label"></label>
+                            <input asp-for="Estuary.SanctuaryProtection.RecommendedExtent" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.UndevelopedMargin.RecommendedExtent" class="col-md-5 col-form-label"></label>
+                            <input asp-for="Estuary.UndevelopedMargin.RecommendedExtent" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WaterRequirement.RecommendedMinimum" class="col-md-5 col-form-label"></label>
+                            <input asp-for="Estuary.WaterRequirement.RecommendedMinimum" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.PriorityForRehabilitation.Priority" class="col-md-5 col-form-label"></label>
+                            <input asp-for="Estuary.PriorityForRehabilitation.Priority" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.RehabilitationComments" class="col-md-5 col-form-label"></label>
+                            <textarea asp-for="Estuary.RehabilitationComments" class="col-md form-control mr-3" readonly rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Rehabilitation Information</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WaterQualityPollution" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.WaterQualityPollution" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WaterQualitySilt" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.WaterQualitySilt" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WaterQuantity" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.WaterQuantity" class="col-md form-control mr-3" rows="3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AlienClearing" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.AlienClearing" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.FixAppropriateBankStabilisation" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.FixAppropriateBankStabilisation" class="col-md form-control mr-3" rows="3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.MouthManagement" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.MouthManagement" class="col-md form-control mr-3" rows="3" readonly />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Estuary Management Plan</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ManagementPlan" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ManagementPlan" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ManagementPlanStatus" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ManagementPlanStatus" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ManagementPlanLink" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ManagementPlanLink" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+    </div>
+</div>

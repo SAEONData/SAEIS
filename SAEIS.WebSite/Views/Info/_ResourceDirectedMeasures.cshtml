@@ -1,0 +1,105 @@
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Conservation Importance</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.SizeImportance" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.SizeImportance" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ZoneTypeRarity" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ZoneTypeRarity" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.HabitatImportance" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.HabitatImportance" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.BiodiversityImportance" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.BiodiversityImportance" asp-format="{0:N3}" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ScoreImportance" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ScoreImportance" asp-format="{0:N3}" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label"></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.RankImportance" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.RankImportance" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">out of 275</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Resource Directed Measures (RDM) Priority</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.DemandScoreRDM" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.DemandScoreRDM" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ImportanceScoreRDM" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ImportanceScoreRDM" asp-format="{0:N3}" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.NationalPriorityRDM" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.NationalPriorityRDM" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.DemandCategoryRDM" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.DemandCategoryRDM" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ImportanceCategoryRDM" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.ImportanceCategoryRDM" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Management Information</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ProvincialImportance" class="col-md-4 col-form-label"></label>
+                            <input asp-for="Estuary.ProvincialImportance" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.NationalImportance" class="col-md-4 col-form-label"></label>
+                            <input asp-for="Estuary.NationalImportance" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.ManagementClassification.Type" class="col-md-4 col-form-label"></label>
+                            <input asp-for="Estuary.ManagementClassification.Type" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.WhitfieldLink" class="col-md-4 col-form-label"></label>
+                            <input asp-for="Estuary.WhitfieldLink" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md"></div>
+</div>

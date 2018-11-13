@@ -15,6 +15,27 @@
             <li class="nav-item">
                 <a class="nav-link" id="catchment-tab" data-toggle="tab" href="#catchment" role="tab" aria-controls="catchment" aria-selected="true">Catchment</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="rdm-tab" data-toggle="tab" href="#rdm" role="tab" aria-controls="rdm" aria-selected="true">RDM</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="management-tab" data-toggle="tab" href="#management" role="tab" aria-controls="management" aria-selected="true">Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="issues-tab" data-toggle="tab" href="#issues" role="tab" aria-controls="issues" aria-selected="true">Issues</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="literature-tab" data-toggle="tab" href="#literature" role="tab" aria-controls="literature" aria-selected="true">Literature</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="maps-tab" data-toggle="tab" href="#maps" role="tab" aria-controls="maps" aria-selected="true">Maps</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="true">Images</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="datasets-tab" data-toggle="tab" href="#datasets" role="tab" aria-controls="datasets" aria-selected="true">Datasets</a>
+            </li>
         </ul>
 
         <div class="tab-content" id="tabInfoContent" style="border-style:solid; border-width:1px; border-color:lightgray; border-top:none">
@@ -26,6 +47,27 @@
             </div>
             <div class="tab-pane fade" id="catchment" role="tabpanel" aria-labelledby="catchment-tab">
                 <partial name="_Catchment" />
+            </div>
+            <div class="tab-pane fade" id="rdm" role="tabpanel" aria-labelledby="rdm-tab">
+                <partial name="_ResourceDirectedMeasures" />
+            </div>
+            <div class="tab-pane fade" id="management" role="tabpanel" aria-labelledby="management-tab">
+                <partial name="_Management" />
+            </div>
+            <div class="tab-pane fade" id="issues" role="tabpanel" aria-labelledby="issues-tab">
+                <partial name="_Issues" />
+            </div>
+            <div class="tab-pane fade" id="literature" role="tabpanel" aria-labelledby="literature-tab">
+                <partial name="_Literature" />
+            </div>
+            <div class="tab-pane fade" id="maps" role="tabpanel" aria-labelledby="maps-tab">
+                <partial name="_Maps" />
+            </div>
+            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                <partial name="_Images" />
+            </div>
+            <div class="tab-pane fade" id="datasets" role="tabpanel" aria-labelledby="datasets-tab">
+                <partial name="_Datasets" />
             </div>
         </div>
     </div>
@@ -41,8 +83,8 @@
     </environment>
     <script type="text/javascript">
         Info.SetMapPoint('@Model.Estuary.Name',-@Model.Estuary.Latitude,@Model.Estuary.Longitude);
-        $(function () {
-        });
+        //$(function () {
+        //});
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Info.InitMap">
     </script>
