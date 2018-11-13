@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SAEIS.Data;
 
 namespace SAEIS.WebSite.Models
 {
     public class InfoViewModel
     {
+        public Estuary Estuary { get; set; }
     }
 }

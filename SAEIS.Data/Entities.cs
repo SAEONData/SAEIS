@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -37,8 +38,11 @@ namespace SAEIS.Data
         [Required, Column("EstuaryID")]
         public int Id { get; set; }
 
-        [Column("EstuaryName")]
+        [Column("EstuaryName"), DisplayName("Estuary Name")]
         public string Name { get; set; }
+        [DisplayName("Alternative Name")]
+        public string AlternativeName { get; set; }
+        public string Place { get; set; }
 
         public int ClassificationId { get; set; }
         public int ConditionId { get; set; }
@@ -46,10 +50,38 @@ namespace SAEIS.Data
         [Column("BioRegionID")]
         public int RegionId { get; set; }
 
-        [Column("LatitudeDecimalDegrees")]
+        [Column("LatitudeDecimalDegrees"), DisplayName("Latitude (E)")]
         public decimal? Latitude { get; set; }
-        [Column("LongitudeDecimalDegrees")]
+        [Column("LongitudeDecimalDegrees"), DisplayName("Longitude (S)")]
         public decimal? Longitude { get; set; }
+
+        [DisplayName("Mouth is open")]
+        public int MouthOpen { get; set; }
+
+        [DisplayName("Area of the floodplain")]
+        public decimal AreaFloodplain { get; set; }
+
+        [DisplayName("Area of the water surface")]
+        public decimal AreaWater { get; set; }
+
+        [DisplayName("Length of waterline")]
+        public decimal LengthShoreLine { get; set; }
+
+        [DisplayName("Length of river")]
+        public int LengthRiver { get; set; }
+
+        [DisplayName("Catchment area")]
+        public int AreaCatchment { get; set; }
+
+        [DisplayName("Catchment area DEAT")]
+        public int AreaCatchmentDEAT { get; set; }
+
+        [Column("MARunnoff"), DisplayName("Mean annual runoff")]
+        public int MeanAnnualRunoff { get; set; }
+
+        [Column("MinFlowReq"), DisplayName("Min flow requirement")]
+        public int MinFlowRequirement { get; set; }
+
 
         // Navigation
         public Classification Classification { get; set; }

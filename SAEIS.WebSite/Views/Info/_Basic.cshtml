@@ -1,0 +1,90 @@
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Location</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Name" class="col-md-2 col-form-label"></label>
+                            <input asp-for="Estuary.Name" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AlternativeName" class="col-md-2 col-form-label"></label>
+                            <input asp-for="Estuary.AlternativeName" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Place" class="col-md-2 col-form-label"></label>
+                            <input asp-for="Estuary.Place" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Latitude" class="col-md-2 col-form-label"></label>
+                            <input asp-for="Estuary.Latitude" asp-format="{0:N6}" class="col-md form-control mr-3" readonly />
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.Longitude" class="col-md-2 col-form-label"></label>
+                            <input asp-for="Estuary.Longitude" asp-format="{0:N6}" class="col-md form-control mr-3" readonly />
+                        </div>
+                    </form>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="mapLocations" style="height:400px; width:100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Specifications</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="Estuary.MouthOpen" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.MouthOpen" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">% of the time</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AreaFloodplain" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.AreaFloodplain" asp-format="{0:N4}" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">hectares</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AreaWater" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.AreaWater" asp-format="{0:N4}" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">hectares</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.LengthShoreLine" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.LengthShoreLine" asp-format="{0:N4}" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">km</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.LengthRiver" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.LengthRiver" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">km</label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AreaCatchment" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.AreaCatchment" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">km<sup>2</sup></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.AreaCatchmentDEAT" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.AreaCatchmentDEAT" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">km<sup>2</sup></label>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="Estuary.MeanAnnualRunoff" class="col-md-3 col-form-label"></label>
+                            <input asp-for="Estuary.MeanAnnualRunoff" class="col-md form-control" readonly />
+                            <label class="col-md-3 col-form-label">m<sup>2</sup> x 10<sup>6</sup></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

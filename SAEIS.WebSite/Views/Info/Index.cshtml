@@ -1,7 +1,50 @@
-﻿
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+
 @{
     ViewData["Title"] = "Information";
 }
+<div class="row">
+    <div class="col-md">
+        <ul class="nav nav-tabs" id="tabInfo" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="classification-tab" data-toggle="tab" href="#classification" role="tab" aria-controls="classification" aria-selected="true">Classification</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="catchment-tab" data-toggle="tab" href="#catchment" role="tab" aria-controls="catchment" aria-selected="true">Catchment</a>
+            </li>
+        </ul>
 
-
+        <div class="tab-content" id="tabInfoContent" style="border-style:solid; border-width:1px; border-color:lightgray; border-top:none">
+            <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                <partial name="_Basic" />
+            </div>
+            <div class="tab-pane fade" id="classification" role="tabpanel" aria-labelledby="classification-tab">
+                <partial name="_Classification" />
+            </div>
+            <div class="tab-pane fade" id="catchment" role="tabpanel" aria-labelledby="catchment-tab">
+                <partial name="_Catchment" />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <environment names="Development">
+        <script src="~/js/Info.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/Info.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    </environment>
+    <script type="text/javascript">
+        Info.SetMapPoint('@Model.Estuary.Name',-@Model.Estuary.Latitude,@Model.Estuary.Longitude);
+        $(function () {
+        });
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Info.InitMap">
+    </script>
+}
 
