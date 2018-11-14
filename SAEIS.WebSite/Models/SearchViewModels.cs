@@ -30,7 +30,7 @@ namespace SAEIS.WebSite.Models
         public SelectList Provinces { get; set; } = null;
     }
 
-    public class TableRowModel
+    public class EstuaryModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

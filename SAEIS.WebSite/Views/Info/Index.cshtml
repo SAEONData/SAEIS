@@ -83,8 +83,14 @@
     </environment>
     <script type="text/javascript">
         Info.SetMapPoint('@Model.Estuary.Name',-@Model.Estuary.Latitude,@Model.Estuary.Longitude);
-        //$(function () {
-        //});
+        $(function () {
+            Info.SetEstuaryId(@Model.Estuary.Id);
+            Info.DrawIssuesTable();
+            Info.DrawLiteratureTable();
+            Info.DrawMapsTable();
+            Info.DrawImagesTable();
+            Info.DrawDatasetsTable();
+        });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Info.InitMap">
     </script>

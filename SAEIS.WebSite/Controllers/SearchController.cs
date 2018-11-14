@@ -89,13 +89,13 @@ namespace SAEIS.WebSite.Controllers
         }
 
         [HttpPost]
-        public List<TableRowModel> GetTableData(FilterModel filters)
+        public List<EstuaryModel> GetEstuaries(FilterModel filters)
         {
             using (Logging.MethodCall(GetType(), new ParameterList { { "Filters", filters } }))
             {
                 try
                 {
-                    return GetData(filters).Select(i => new TableRowModel
+                    return GetData(filters).Select(i => new EstuaryModel
                     {
                         Id = i.Id,
                         Name = $"<a href='/Info/{i.Id}'>{i.Name}</a>",

@@ -2,40 +2,40 @@ var Search;
 (function (Search) {
     // Errors
     function ShowWaiting() {
-        //$("#modalLoading").modal("show");
+        $("#modalLoading").modal("show");
     }
     Search.ShowWaiting = ShowWaiting;
     function HideWaiting() {
-        //$("#modalLoading").modal("hide");
+        $("#modalLoading").modal("hide");
     }
     Search.HideWaiting = HideWaiting;
     function ErrorInFunc(method, status, error) {
         HideWaiting();
         alert("Error in " + method + " Status: " + status + " Error: " + error);
     }
-    function DrawTable(filters) {
+    function DrawEstuariesTable(filters) {
         if (!filters) {
             filters = GetFilters();
         }
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.post("/Search/GetTableData", filters)
+            $.post("/Search/GetEstuaries", filters)
                 .done(function (json) {
                 var data = new google.visualization.DataTable();
                 data.addColumn('number', '#');
                 data.addColumn('string', 'Name');
                 data.addColumn('string', 'Province');
                 data.addColumn('string', 'Classification');
-                var dataValues = json;
-                for (var i = 0; i < dataValues.length; i++) {
-                    data.addRow([dataValues[i].id, dataValues[i].name, dataValues[i].province, dataValues[i].classification]);
+                var items = json;
+                for (var i = 0; i < items.length; i++) {
+                    data.addRow([items[i].id, items[i].name, items[i].province, items[i].classification]);
                 }
-                var table = new google.visualization.Table(document.getElementById('table_div'));
+                var table = new google.visualization.Table(document.getElementById('tableEstuaries'));
                 table.draw(data, { allowHtml: true, width: '100%', height: '100%', page: 'enable', pageSize: 25 });
             })
                 .fail(function (jqXHR, status, error) {
-                ErrorInFunc("GetTableData", status, error);
+                ErrorInFunc("GetEstuaries", status, error);
             });
         }
     }
@@ -127,11 +127,11 @@ var Search;
         return filters;
     }
     function UpdateFilters() {
-        ShowWaiting();
+        //ShowWaiting();
         var filters = GetFilters();
-        DrawTable(filters);
         UpdateMap(filters);
-        setTimeout(HideWaiting(), 2000);
+        DrawEstuariesTable(filters);
+        //setTimeout(HideWaiting(),2000);
     }
     Search.UpdateFilters = UpdateFilters;
 })(Search || (Search = {}));

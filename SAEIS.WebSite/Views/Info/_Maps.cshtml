@@ -1,4 +1,36 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+<div class="row">
+    <div class="col-md-3">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Filters</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label asp-for="MapType" class="col-md-3 col-form-label"></label>
+                            <select asp-for="MapType" asp-items="Model.MapTypes" class="col-md form-control mr-3" onchange="Info.UpdateMapFilters()"></select>
+                        </div>
+                        <div class="form-group row">
+                            <label asp-for="MapSubType" class="col-md-3 col-form-label"></label>
+                            <select asp-for="MapSubType" asp-items="Model.MapSubTypes" class="col-md form-control mr-3" onchange="Info.UpdateMapFilters()"></select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Maps</h5>
+                <div class="card-body">
+                    <div id="tableMaps"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

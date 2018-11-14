@@ -1,4 +1,32 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SAEIS.WebSite.Models.InfoViewModel
+<div class="row">
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header">Issues</h5>
+                <div class="card-body">
+                    <div id="tableIssues"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="m-3">
+            <div class="card">
+                <h5 class="card-header" id="Issue_Details">Details</h5>
+                <div class="card-body">
+                    <form class="card-text">
+                        <div class="form-group row">
+                            <label for="Issue_Notes" class="col-md-2 col-form-label">Notes</label>
+                            <textarea id="Issue_Notes" class="col-md form-control mr-3" readonly rows="6"></textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Issue_Responses"  class="col-md-2 col-form-label">Responses</label>
+                            <textarea id="Issue_Responses" class="col-md form-control mr-3" readonly rows="4"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

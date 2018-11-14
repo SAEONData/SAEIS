@@ -4,9 +4,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SAEIS.Data
 {
+
+    public static class Helpers
+    {
+        public static string YesNo(string value)
+        {
+            if (value.Equals("Y", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return "Yes";
+            }
+            else if (value.Equals("N", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return "No";
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
     [Table("Classification")]
     public class Classification
     {
@@ -37,19 +58,40 @@ namespace SAEIS.Data
         public List<Estuary> Estuaries { get; set; }
     }
 
+    [Table("Dataset")]
+    public class Dataset
+    {
+        [Required, Column("DatasetID")]
+        public int Id { get; set; }
+        [Column("DatasetName")]
+        public string Name { get; set; }
+        public string Date { get; set; }
+
+        // Navigation
+        public List<DatasetVariable> DatasetVariables { get; set; }
+    }
+
+    [Table("DatasetVariable")]
+    public class DatasetVariable
+    {
+        [Required, Column("DatasetVariableID")]
+        public int Id { get; set; }
+        [Required]
+        public int DatasetId { get; set; }
+        public string Type { get; set; }
+        public string SubType { get; set; }
+        public string VariableType { get; set; }
+        public string VariableName { get; set; }
+        [Column("LinkToDocument")]
+        public string Link { get; set; }
+
+        // Navigation
+        public Dataset Dataset { get; set; }
+    }
+
     [Table("Estuary")]
     public class Estuary
     {
-        string YN(string value)
-        {
-            if (value.Equals("Y", StringComparison.CurrentCultureIgnoreCase))
-                return "Yes";
-            else if (value.Equals("N", StringComparison.CurrentCultureIgnoreCase))
-                return "No";
-            else
-                return null;
-        }
-
         [Required, Column("EstuaryID")]
         public int Id { get; set; }
 
@@ -86,31 +128,31 @@ namespace SAEIS.Data
         public decimal? Longitude { get; set; }
 
         [DisplayName("Mouth is open")]
-        public int MouthOpen { get; set; }
+        public int? MouthOpen { get; set; }
 
         [DisplayName("Area of the floodplain")]
-        public decimal AreaFloodplain { get; set; }
+        public decimal? AreaFloodplain { get; set; }
 
         [DisplayName("Area of the water surface")]
-        public decimal AreaWater { get; set; }
+        public decimal? AreaWater { get; set; }
 
         [DisplayName("Length of waterline")]
-        public decimal LengthShoreLine { get; set; }
+        public decimal? LengthShoreLine { get; set; }
 
         [DisplayName("Length of river")]
-        public int LengthRiver { get; set; }
+        public int? LengthRiver { get; set; }
 
         [DisplayName("Catchment area")]
-        public int AreaCatchment { get; set; }
+        public int? AreaCatchment { get; set; }
 
         [DisplayName("Catchment area DEAT")]
-        public int AreaCatchmentDEAT { get; set; }
+        public int? AreaCatchmentDEAT { get; set; }
 
         [Column("MARunnoff"), DisplayName("Mean annual runoff")]
-        public int MeanAnnualRunoff { get; set; }
+        public int? MeanAnnualRunoff { get; set; }
 
         [Column("MinFlowReq"), DisplayName("Min flow requirement")]
-        public int MinFlowRequirement { get; set; }
+        public int? MinFlowRequirement { get; set; }
 
         [DisplayName("Agriculture")]
         public int? PercentAgriculture { get; set; }
@@ -135,7 +177,7 @@ namespace SAEIS.Data
         [Column("RankConsImp"), DisplayName("National rank")]
         public int? RankImportance { get; set; }
         [Column("DemandScoreRDM"), DisplayName("Demand score")]
-        public int? DemandScoreRDM{ get; set; }
+        public int? DemandScoreRDM { get; set; }
         [Column("ImpScoreRDM"), DisplayName("Importance score")]
         public decimal? ImportanceScoreRDM { get; set; }
         [Column("PriorityRDM"), DisplayName("National priority")]
@@ -153,27 +195,27 @@ namespace SAEIS.Data
         [Column("WaterQualityPollution")]
         public string WaterQualityPollutionYN { get; set; }
         [DisplayName("Water quality (pollution)"), NotMapped]
-        public string WaterQualityPollution { get => YN(WaterQualityPollutionYN); }
+        public string WaterQualityPollution { get => Helpers.YesNo(WaterQualityPollutionYN); }
         [Column("WaterQualitySilt")]
         public string WaterQualitySiltYN { get; set; }
         [DisplayName("Water quality (silt)"), NotMapped]
-        public string WaterQualitySilt { get => YN(WaterQualitySiltYN); }
-        [Column("WaterQuantityGen"),DisplayName("Water quantity")]
+        public string WaterQualitySilt { get => Helpers.YesNo(WaterQualitySiltYN); }
+        [Column("WaterQuantityGen"), DisplayName("Water quantity")]
         public string WaterQuantityYN { get; set; }
         [DisplayName("Water quantity"), NotMapped]
-        public string WaterQuantity { get => YN(WaterQuantityYN); }
+        public string WaterQuantity { get => Helpers.YesNo(WaterQuantityYN); }
         [Column("AlienClearing")]
         public string AlienClearingYN { get; set; }
         [DisplayName("Alien clearing"), NotMapped]
-        public string AlienClearing { get => YN(AlienClearingYN); }
+        public string AlienClearing { get => Helpers.YesNo(AlienClearingYN); }
         [Column("FixAppropriateBankStabilisation")]
         public string FixAppropriateBankStabilisationYN { get; set; }
         [DisplayName("Fix appropriate bank stabilisation"), NotMapped]
-        public string FixAppropriateBankStabilisation { get => YN(FixAppropriateBankStabilisationYN); }
+        public string FixAppropriateBankStabilisation { get => Helpers.YesNo(FixAppropriateBankStabilisationYN); }
         [Column("MouthManagement")]
         public string MouthManagementYN { get; set; }
         [DisplayName("Mouth management"), NotMapped]
-        public string MouthManagement { get => YN(MouthManagementYN); }
+        public string MouthManagement { get => Helpers.YesNo(MouthManagementYN); }
         [DisplayName("Rehabilitation comments")]
         public string RehabilitationComments { get; set; }
         [DisplayName("Plan"), NotMapped]
@@ -182,7 +224,6 @@ namespace SAEIS.Data
         public string ManagementPlanStatus { get; set; }
         [DisplayName("Link"), NotMapped]
         public string ManagementPlanLink { get; set; }
-
 
         // Navigation
         public Classification Classification { get; set; }
@@ -197,6 +238,63 @@ namespace SAEIS.Data
         public UndevelopedMargin UndevelopedMargin { get; set; }
         public WaterQuality WaterQuality { get; set; }
         public WaterRequirement WaterRequirement { get; set; }
+        public List<Issue> Issues { get; set; }
+        public List<EstuaryLiterature> EstuaryLiteratures { get; set; }
+        public List<EstuaryMap> EstuaryMaps { get; set; }
+        public List<EstuaryImage> EstuaryImages { get; set; }
+        public List<EstuaryDataset> EstuaryDatasets { get; set; }
+    }
+
+    [Table("EstuaryDataset")]
+    public class EstuaryDataset
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int DatasetId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Dataset Dataset { get; set; }
+    }
+
+    [Table("EstuaryLiterature")]
+    public class EstuaryLiterature
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int LiteratureId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Literature Literature { get; set; }
+    }
+
+    [Table("EstuaryMap")]
+    public class EstuaryMap
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int MapId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Map Map { get; set; }
+    }
+
+    [Table("EstuaryImage")]
+    public class EstuaryImage
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int ImageId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Image Image { get; set; }
     }
 
     [Table("Geomorphology")]
@@ -212,6 +310,27 @@ namespace SAEIS.Data
         public List<Estuary> Estuaries { get; set; }
     }
 
+    [Table("Images")]
+    public class Image
+    {
+        [Required, Column("ImageID")]
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string SubType { get; set; }
+        public string Name { get; set; }
+        [Column("Available")]
+        public string AvailableYN { get; set; }
+        [NotMapped]
+        public string Available { get => Helpers.YesNo(AvailableYN); }
+        [Column("ImageDate")]
+        public string Date { get; set; }
+        [Column("LinkToImage")]
+        public string Link { get; set; }
+        public string Source { get; set; }
+        public string Reference { get; set; }
+        public string Notes { get; set; }
+    }
+
     [Table("InfoAvailable")]
     public class InfoAvailable
     {
@@ -225,6 +344,60 @@ namespace SAEIS.Data
         public List<Estuary> Estuaries { get; set; }
     }
 
+    [Table("Issue")]
+    public class Issue
+    {
+        [Required, Column("IssueID")]
+        public int Id { get; set; }
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int IssueTypeId { get; set; }
+        [Column("IssueHeader")]
+        public string Header { get; set; }
+        public string Notes { get; set; }
+        public string Responses { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public IssueType IssueType { get; set; }
+    }
+
+    [Table("IssueType")]
+    public class IssueType
+    {
+        [Required, Column("IssueTypeID")]
+        public int Id { get; set; }
+        [Column("IssueType"), DisplayName("Issue type")]
+        public string Type { get; set; }
+
+        // Navigation
+        public List<Issue> Issues { get; set; }
+    }
+
+    [Table("Literature")]
+    public class Literature
+    {
+        [Required, Column("LiteratureID")]
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string SubType { get; set; }
+        public string Author { get; set; }
+        [Column("PublishDate")]
+        public string Year { get; set; }
+        public string Title { get; set; }
+        [Column("Available")]
+        public string AvailableYN { get; set; }
+        [NotMapped]
+        public string Available { get => Helpers.YesNo(AvailableYN); }
+        [Column("LinkToManuscript")]
+        public string Link { get; set; }
+
+        // Navigation
+        public List<EstuaryLiterature> EstuaryLiteratures { get; set; }
+
+    }
+
     [Table("ManagementClassification")]
     public class ManagementClassification
     {
@@ -236,6 +409,23 @@ namespace SAEIS.Data
 
         // Navigation
         public List<Estuary> Estuaries { get; set; }
+    }
+
+    [Table("Map")]
+    public class Map
+    {
+        [Required, Column("MapID")]
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string SubType { get; set; }
+        [Column("MapName")]
+        public string Name { get; set; }
+        [Column("Available")]
+        public string AvailableYN { get; set; }
+        [NotMapped]
+        public string Available { get => Helpers.YesNo(AvailableYN); }
+        [Column("LinkToMap")]
+        public string Link { get; set; }
     }
 
     [Table("PriorityForRehabilitation")]
@@ -338,9 +528,16 @@ namespace SAEIS.Data
 
         public DbSet<Classification> Classifications { get; set; }
         public DbSet<Condition> Conditions { get; set; }
+        public DbSet<Dataset> Datasets { get; set; }
+        public DbSet<DatasetVariable> DatasetVariables { get; set; }
         public DbSet<Estuary> Estuaries { get; set; }
         public DbSet<Geomorphology> Geomorphologies { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Issue> Issues { get; set; }
+        public DbSet<IssueType> IssueTypes { get; set; }
+        public DbSet<Literature> Literatures { get; set; }
         public DbSet<ManagementClassification> ManagementClassifications { get; set; }
+        public DbSet<Map>Maps { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<PriorityForRehabilitation> PriorityForRehabilitations { get; set; }
         public DbSet<Region> Regions { get; set; }
@@ -348,5 +545,17 @@ namespace SAEIS.Data
         public DbSet<UndevelopedMargin> UndevelopedMargins { get; set; }
         public DbSet<WaterQuality> WaterQualities { get; set; }
         public DbSet<WaterRequirement> WaterRequirements { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EstuaryLiterature>()
+                .HasKey(el => new { el.EstuaryId, el.LiteratureId });
+            modelBuilder.Entity<EstuaryMap>()
+                .HasKey(el => new { el.EstuaryId, el.MapId });
+            modelBuilder.Entity<EstuaryImage>()
+                .HasKey(el => new { el.EstuaryId, el.ImageId });
+            modelBuilder.Entity<EstuaryDataset>()
+                .HasKey(el => new { el.EstuaryId, el.DatasetId });
+        }
     }
 }

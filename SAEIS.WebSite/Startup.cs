@@ -45,7 +45,6 @@ namespace SAEIS.WebSite
                     //services.AddDbContext<SAEONDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
 
                     services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-                    services.AddLogging();
                     services.AddCors();
                 }
                 catch (Exception ex)
@@ -80,6 +79,12 @@ namespace SAEIS.WebSite
                         FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
                         RequestPath = "/node_modules"
+                    });
+                    app.UseStaticFiles(new StaticFileOptions
+                    {
+                        FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
+                        RequestPath = "/Archive"
                     });
                     app.UseCookiePolicy();
 
