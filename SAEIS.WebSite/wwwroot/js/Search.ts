@@ -32,7 +32,8 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            $.post("/Search/GetEstuaries",filters)
+            //$.post("/Search/GetEstuaries", filters)
+            $.post("Search/GetEstuaries",filters)
                 .done(function (json) {
                     var data = new google.visualization.DataTable();
                     data.addColumn('number', '#');
@@ -84,7 +85,8 @@
         if (!filters) {
             filters = GetFilters();
         }
-        $.post("/Search/GetMapData", filters)
+        //$.post("/Search/GetMapData", filters)
+        $.post("Search/GetMapData", filters)
             .done(function (json) {
                 for (let i = 0; i < markers.length; i++) {
                     markers[i].setMap(null);

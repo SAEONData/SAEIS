@@ -21,8 +21,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.Release.json" />
+    <Content Remove="secrets.Release.json" />
     <Content Remove="wwwroot\js\Info.ts" />
     <Content Remove="wwwroot\js\Search.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.Release.json">
+      <IsTransformFile>true</IsTransformFile>
+      <DependentUpon>appsettings.json</DependentUpon>
+    </None>
+    <None Include="secrets.Release.json">
+      <IsTransformFile>true</IsTransformFile>
+      <DependentUpon>secrets.json</DependentUpon>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +43,11 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.1.66">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
     <PackageReference Include="SAEON.Logs" Version="1.0.33" />
   </ItemGroup>
 
@@ -48,6 +65,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
+    <Content Update="secrets.json">
+      <TransformOnBuild>true</TransformOnBuild>
+    </Content>
     <Content Update="Views\Info\_Catchment.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

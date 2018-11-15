@@ -33,22 +33,32 @@ namespace SAEIS.WebSite.Controllers
 
         public IActionResult Index()
         {
-
-            SelectList SelectListFrom(IQueryable<ListItem> list)
+            using (Logging.MethodCall(GetType()))
             {
-                var newList = list.OrderBy(i => i.Text).ToList();
-                newList.Insert(0, new ListItem { Text = "All", IsSelected = true });
-                return new SelectList(newList, "Id", "Text", "All");
+                try
+                {
+                    SelectList SelectListFrom(IQueryable<ListItem> list)
+                    {
+                        var newList = list.OrderBy(i => i.Text).ToList();
+                        newList.Insert(0, new ListItem { Text = "All", IsSelected = true });
+                        return new SelectList(newList, "Id", "Text", "All");
+                    }
+                    var model = new SearchViewModel
+                    {
+                        Classifications = SelectListFrom(dbContext.Classifications.Select(i => new ListItem { Id = i.Id, Text = i.Type })),
+                        Regions = SelectListFrom(dbContext.Regions.Select(i => new ListItem { Id = i.Id, Text = i.Category })),
+                        Conditions = SelectListFrom(dbContext.Conditions.Select(i => new ListItem { Id = i.Id, Text = i.Type })),
+                        Provinces = SelectListFrom(dbContext.Provinces.Select(i => new ListItem { Id = i.Id, Text = i.Name }))
+                    };
+                    return View(model);
+
+                }
+                catch (Exception ex)
+                {
+                    Logging.Exception(ex);
+                    throw;
+                }
             }
-
-            var model = new SearchViewModel
-            {
-                Classifications = SelectListFrom(dbContext.Classifications.Select(i => new ListItem { Id = i.Id, Text = i.Type })),
-                Regions = SelectListFrom(dbContext.Regions.Select(i => new ListItem { Id = i.Id, Text = i.Category })),
-                Conditions = SelectListFrom(dbContext.Conditions.Select(i => new ListItem { Id = i.Id, Text = i.Type })),
-                Provinces = SelectListFrom(dbContext.Provinces.Select(i => new ListItem { Id = i.Id, Text = i.Name }))
-            };
-            return View(model);
         }
 
         private IQueryable<Estuary> GetData(FilterModel filters)
@@ -60,7 +70,7 @@ namespace SAEIS.WebSite.Controllers
                     var query = dbContext.Estuaries.AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Name))
                     {
-                        query = query.Where(i => EF.Functions.Like(i.Name,$"%{filters.Name}%"));
+                        query = query.Where(i => EF.Functions.Like(i.Name, $"%{filters.Name}%"));
                     }
                     if (filters?.Classification.HasValue ?? false)
                     {
@@ -98,7 +108,7 @@ namespace SAEIS.WebSite.Controllers
                     return GetData(filters).Select(i => new EstuaryModel
                     {
                         Id = i.Id,
-                        Name = $"<a href='/Info/{i.Id}'>{i.Name}</a>",
+                        Name = $"<a href='Info/{i.Id}'>{i.Name}</a>",
                         Classification = i.Classification.Type,
                         Province = i.Province.Name
                     }).ToList();
@@ -122,8 +132,8 @@ namespace SAEIS.WebSite.Controllers
                     {
                         Id = i.Id,
                         Name = i.Name,
-                        Url = $"/Info/{i.Id}",
-                        Link = $"<a href='/Info/{i.Id}'>{i.Name}</a>",
+                        Url = $"Info/{i.Id}",
+                        Link = $"<a href='Info/{i.Id}'>{i.Name}</a>",
                         Latitude = -i.Latitude.Value,
                         Longitude = i.Longitude.Value
                     }).ToList();

@@ -55,7 +55,8 @@ var Info;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.getJSON("/Info/" + estuaryId + "/Issues")
+            //$.getJSON("/Info/" + estuaryId + "/Issues")
+            $.getJSON(estuaryId + "/Issues")
                 .done(function (json) {
                 issues = json;
                 var data = new google.visualization.DataTable();
@@ -116,7 +117,8 @@ var Info;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.post("/Info/" + estuaryId + "/Literature", filters)
+            //$.post("/Info/" + estuaryId + "/Literature", filters)
+            $.post(estuaryId + "/Literature", filters)
                 .done(function (json) {
                 var items = json;
                 var data = new google.visualization.DataTable();
@@ -167,7 +169,8 @@ var Info;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.post("/Info/" + estuaryId + "/Maps", filters)
+            //$.post("/Info/" + estuaryId + "/Maps", filters)
+            $.post(estuaryId + "/Maps", filters)
                 .done(function (json) {
                 var items = json;
                 var data = new google.visualization.DataTable();
@@ -216,7 +219,8 @@ var Info;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.post("/Info/" + estuaryId + "/Images", filters)
+            //$.post("/Info/" + estuaryId + "/Images", filters)
+            $.post(estuaryId + "/Images", filters)
                 .done(function (json) {
                 var items = json;
                 var data = new google.visualization.DataTable();
@@ -269,7 +273,8 @@ var Info;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            $.post("/Info/" + estuaryId + "/Datasets", filters)
+            //$.post("/Info/" + estuaryId + "/Datasets", filters)
+            $.post(estuaryId + "/Datasets", filters)
                 .done(function (json) {
                 var items = json;
                 var data = new google.visualization.DataTable();

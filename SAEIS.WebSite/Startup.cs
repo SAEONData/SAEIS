@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.FileProviders;
 using SAEIS.Data;
 using SAEON.Logs;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace SAEIS.WebSite
@@ -32,6 +34,7 @@ namespace SAEIS.WebSite
             {
                 try
                 {
+                    Logging.Information("Configuring services");
                     services.Configure<CookiePolicyOptions>(options =>
                     {
                         // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,6 +65,7 @@ namespace SAEIS.WebSite
             {
                 try
                 {
+                    Logging.Verbose("Configure: {IsDevelopment}",env.IsDevelopment());
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();
@@ -87,6 +91,19 @@ namespace SAEIS.WebSite
                         RequestPath = "/Archive"
                     });
                     app.UseCookiePolicy();
+                    var supportedCultures = new[]
+                    {
+                        new CultureInfo("en-GB")
+                    };
+
+                    app.UseRequestLocalization(new RequestLocalizationOptions
+                    {
+                        DefaultRequestCulture = new RequestCulture("en-GB"),
+                        // Formatting numbers, dates, etc.
+                        SupportedCultures = supportedCultures,
+                        // UI strings that we have localized.
+                        SupportedUICultures = supportedCultures
+                    });
 
                     //app.UseMvc(routes =>
                     //{
