@@ -19,10 +19,23 @@ namespace SAEIS.WebSite
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            Logging
-                .CreateConfiguration("Logs/SAEIS.WebSite.txt", configuration)
-                .Create();
+            using (Logging.MethodCall(GetType()))
+            {
+                try
+                {
+                    Logging.Information("Configuring services");
+                    Configuration = configuration;
+                    Logging
+                        .CreateConfiguration("Logs/SAEIS.WebSite.txt", configuration)
+                        .Create();
+                    Logging.Information("AppInsights: {Key}",configuration["ApplicationInsights:InstrumentationKey"]);
+                }
+                catch (Exception ex)
+                {
+                    Logging.Exception(ex);
+                    throw;
+                }
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +48,7 @@ namespace SAEIS.WebSite
                 try
                 {
                     Logging.Information("Configuring services");
+                    services.AddApplicationInsightsTelemetry(Configuration);
                     services.Configure<CookiePolicyOptions>(options =>
                     {
                         // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -65,7 +79,7 @@ namespace SAEIS.WebSite
             {
                 try
                 {
-                    Logging.Verbose("Configure: {IsDevelopment}",env.IsDevelopment());
+                    Logging.Verbose("Configure: {IsDevelopment}", env.IsDevelopment());
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();

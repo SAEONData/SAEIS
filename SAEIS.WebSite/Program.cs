@@ -13,11 +13,11 @@ namespace SAEIS.WebSite
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
                     config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
                 })
+                //.UseApplicationInsights() // Now in ConfigureServices
                 .UseStartup<Startup>();
     }
 }
