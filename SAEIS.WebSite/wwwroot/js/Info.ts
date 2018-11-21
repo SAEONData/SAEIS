@@ -73,8 +73,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.getJSON("/Info/" + estuaryId + "/Issues")
-            $.getJSON(estuaryId+"/Issues")
+            $.getJSON("/Info/" + estuaryId + "/Issues")
                 .done(function (json) {
                     issues = json;
                     var data = new google.visualization.DataTable();
@@ -151,8 +150,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.post("/Info/" + estuaryId + "/Literature", filters)
-            $.post(estuaryId +"/Literature",filters)
+            $.post("/Info/" + estuaryId + "/Literature", filters)
                 .done(function (json) {
                     let items: LiteratureItem[] = json;
                     var data = new google.visualization.DataTable();
@@ -215,8 +213,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.post("/Info/" + estuaryId + "/Maps", filters)
-            $.post(estuaryId +"/Maps", filters)
+            $.post("/Info/" + estuaryId + "/Maps", filters)
                 .done(function (json) {
                     let items: MapItem[] = json;
                     var data = new google.visualization.DataTable();
@@ -281,8 +278,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.post("/Info/" + estuaryId + "/Images", filters)
-            $.post(estuaryId +"/Images", filters)
+            $.post("/Info/" + estuaryId + "/Images", filters)
                 .done(function (json) {
                     let items: ImageItem[] = json;
                     var data = new google.visualization.DataTable();
@@ -349,8 +345,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.post("/Info/" + estuaryId + "/Datasets", filters)
-            $.post(estuaryId +"/Datasets", filters)
+            $.post("/Info/" + estuaryId + "/Datasets", filters)
                 .done(function (json) {
                     let items: DatasetItem[] = json;
                     var data = new google.visualization.DataTable();

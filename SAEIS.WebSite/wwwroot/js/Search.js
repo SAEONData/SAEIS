@@ -20,8 +20,7 @@ var Search;
         google.charts.load('current', { 'packages': ['table'] });
         google.charts.setOnLoadCallback(drawTable);
         function drawTable() {
-            //$.post("/Search/GetEstuaries", filters)
-            $.post("Search/GetEstuaries", filters)
+            $.post("/Search/GetEstuaries", filters)
                 .done(function (json) {
                 var data = new google.visualization.DataTable();
                 data.addColumn('number', '#');
@@ -59,8 +58,7 @@ var Search;
         if (!filters) {
             filters = GetFilters();
         }
-        //$.post("/Search/GetMapData", filters)
-        $.post("Search/GetMapData", filters)
+        $.post("/Search/GetMapData", filters)
             .done(function (json) {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
@@ -68,7 +66,7 @@ var Search;
             markers = [];
             mapPoints = json;
             mapBounds = new google.maps.LatLngBounds();
-            for (var i = 0; i < mapPoints.length; i++) {
+            var _loop_1 = function (i) {
                 var mapPoint = mapPoints[i];
                 var marker = new google.maps.Marker({
                     position: { lat: mapPoint.latitude, lng: mapPoint.longitude },
@@ -78,6 +76,12 @@ var Search;
                 markers.push(marker);
                 mapBounds.extend(marker.getPosition());
                 marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                marker.addListener('click', function () {
+                    window.location.href = mapPoint.url;
+                });
+            };
+            for (var i = 0; i < mapPoints.length; i++) {
+                _loop_1(i);
             }
         })
             .fail(function (jqXHR, status, error) {

@@ -32,8 +32,7 @@
         google.charts.setOnLoadCallback(drawTable);
 
         function drawTable() {
-            //$.post("/Search/GetEstuaries", filters)
-            $.post("Search/GetEstuaries",filters)
+            $.post("/Search/GetEstuaries", filters)
                 .done(function (json) {
                     var data = new google.visualization.DataTable();
                     data.addColumn('number', '#');
@@ -85,8 +84,7 @@
         if (!filters) {
             filters = GetFilters();
         }
-        //$.post("/Search/GetMapData", filters)
-        $.post("Search/GetMapData", filters)
+        $.post("/Search/GetMapData", filters)
             .done(function (json) {
                 for (let i = 0; i < markers.length; i++) {
                     markers[i].setMap(null);
@@ -104,6 +102,9 @@
                     markers.push(marker);
                     mapBounds.extend(marker.getPosition());
                     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                    marker.addListener('click', function () {
+                        window.location.href = mapPoint.url;
+                    });
                 }
             })
             .fail(function (jqXHR, status, error) {
