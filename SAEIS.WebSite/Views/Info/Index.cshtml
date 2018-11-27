@@ -82,7 +82,7 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </environment>
     <script type="text/javascript">
-        Info.SetMapPoint('@Model.Estuary.Name',-@Model.Estuary.Latitude,@Model.Estuary.Longitude);
+        Info.SetMapPoint('@Model.Estuary.Name',@Model.Estuary.Latitude,@Model.Estuary.Longitude);
         $(function () {
             Info.SetEstuaryId(@Model.Estuary.Id);
             Info.DrawIssuesTable();

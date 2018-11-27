@@ -134,7 +134,7 @@ namespace SAEIS.WebSite.Controllers
                         Name = i.Name,
                         Url = $"Info/{i.Id}",
                         Link = $"<a href='Info/{i.Id}'>{i.Name}</a>",
-                        Latitude = -i.Latitude.Value,
+                        Latitude = i.Latitude.Value,
                         Longitude = i.Longitude.Value
                     }).ToList();
                 }

@@ -72,8 +72,9 @@
 
     export function InitMap() {
         let mapOpts: google.maps.MapOptions = {
-            center: new google.maps.LatLng(-34, 25.5),
-            zoom: 5
+            center: new google.maps.LatLng(-30.913054, 24.669581), 
+            zoom: 6,
+            mapTypeId: google.maps.MapTypeId.SATELLITE
         };
         map = new google.maps.Map(document.getElementById('mapLocations'), mapOpts);
         UpdateMap(GetFilters());
@@ -123,6 +124,7 @@
     export function FixMap() {
         UpdateMap(GetFilters());
         FitMap(true);
+        alert(map.getCenter()+ " " +map.getZoom())
     }
 
     // Filter updates

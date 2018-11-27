@@ -34,7 +34,8 @@ var Info;
     function InitMap() {
         var mapOpts = {
             center: new google.maps.LatLng(mapPoint.latitude, mapPoint.longitude),
-            zoom: 15
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.SATELLITE
         };
         map = new google.maps.Map(document.getElementById('mapLocations'), mapOpts);
         var marker = new google.maps.Marker({
