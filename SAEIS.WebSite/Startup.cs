@@ -91,18 +91,35 @@ namespace SAEIS.WebSite
                         app.UseExceptionHandler("/Home/Error");
                     }
                     app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-                    app.UseStaticFiles();
+
+                    var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+                    app.UseStaticFiles(new StaticFileOptions
+                    {
+                        OnPrepareResponse = ctx =>
+                        {
+                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                        }
+                    });
                     app.UseStaticFiles(new StaticFileOptions
                     {
                         FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
-                        RequestPath = "/node_modules"
+                        RequestPath = "/node_modules",
+                        OnPrepareResponse = ctx =>
+                        {
+                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                        }
+
                     });
                     app.UseStaticFiles(new StaticFileOptions
                     {
                         FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
-                        RequestPath = "/Archive"
+                        RequestPath = "/Archive",
+                        OnPrepareResponse = ctx =>
+                        {
+                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                        }
                     });
                     app.UseCookiePolicy();
                     var supportedCultures = new[]

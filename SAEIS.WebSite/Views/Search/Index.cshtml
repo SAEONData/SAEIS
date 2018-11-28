@@ -29,7 +29,7 @@
                         <label asp-for="Province"></label>
                         <select asp-for="Province" asp-items="Model.Provinces" class="form-control" onchange="Search.UpdateFilters()"></select>
                     </div>
-                    <button type="button" id="btnSearch" class="btn btn-primary" onclick="Search.FixMap()">Search</button>
+                    @*<button type="button" id="btnSearch" class="btn btn-primary" onclick="Search.FixMap()">Search</button>*@
                 </form>
             </div>
         </div>
@@ -85,6 +85,11 @@
         //Search.ShowWaiting();
         $(function () {
             Search.UpdateFilters();
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                if (String(e.target).endsWith("#map")) {
+                    Search.FitMap();
+                }
+            })
         });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Search.InitMap">

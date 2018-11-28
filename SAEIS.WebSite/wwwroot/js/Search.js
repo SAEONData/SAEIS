@@ -52,7 +52,7 @@ var Search;
         };
         map = new google.maps.Map(document.getElementById('mapLocations'), mapOpts);
         UpdateMap(GetFilters());
-        FitMap();
+        //FitMap();
     }
     Search.InitMap = InitMap;
     function UpdateMap(filters) {

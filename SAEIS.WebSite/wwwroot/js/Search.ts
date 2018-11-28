@@ -78,7 +78,7 @@
         };
         map = new google.maps.Map(document.getElementById('mapLocations'), mapOpts);
         UpdateMap(GetFilters());
-        FitMap();
+        //FitMap();
     }
 
     function UpdateMap(filters: Filters) {
