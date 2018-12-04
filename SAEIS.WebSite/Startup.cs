@@ -63,6 +63,9 @@ namespace SAEIS.WebSite
 
                     services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
                     services.AddCors();
+
+                    IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
+                    services.AddSingleton<IFileProvider>(physicalProvider);
                 }
                 catch (Exception ex)
                 {

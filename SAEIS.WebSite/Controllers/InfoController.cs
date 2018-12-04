@@ -135,7 +135,7 @@ namespace SAEIS.WebSite.Controllers
                         return new List<LiteratureModel>();
                     }
 
-                    var query = estuary.EstuaryLiteratures.Select(i => i.Literature)/*.Where(i => i.Available == "Yes")*/.AsQueryable();
+                    var query = estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => i.Available == "Yes").AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);
@@ -182,7 +182,7 @@ namespace SAEIS.WebSite.Controllers
                     {
                         return new List<MapModel>();
                     }
-                    var query = estuary.EstuaryMaps.Select(i => i.Map)/*.Where(i => i.Available == "Yes")*/.AsQueryable();
+                    var query = estuary.EstuaryMaps.Select(i => i.Map).Where(i => i.Available == "Yes").AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);
@@ -226,7 +226,7 @@ namespace SAEIS.WebSite.Controllers
                         return new List<ImageModel>();
                     }
 
-                    var query = estuary.EstuaryImages.Select(i => i.Image)/*.Where(i => i.Available == "Yes")*/.AsQueryable();
+                    var query = estuary.EstuaryImages.Select(i => i.Image).Where(i => i.Available == "Yes").AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);

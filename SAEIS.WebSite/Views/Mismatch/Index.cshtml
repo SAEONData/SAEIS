@@ -1,0 +1,32 @@
+﻿@model MismatchModel
+
+@{
+    ViewData["Title"] = "Mismatches";
+}
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">FileName</th>
+                <th scope="col">InDirectory</th>
+                <th scope="col">InDatabase</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int i = 1;}
+            @foreach (var item in Model.Items)
+            {
+            <tr>
+                <th scope="row">@(i++)</th>
+                <td>@item.Type</td>
+                <td>@item.FileName</td>
+                <td>@item.InDirectory</td>
+                <td>@item.InDatabase</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
