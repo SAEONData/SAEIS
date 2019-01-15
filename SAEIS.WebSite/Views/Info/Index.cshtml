@@ -1,7 +1,17 @@
 ﻿@model SAEIS.WebSite.Models.InfoViewModel
 
 @{
-    ViewData["Title"] = "Information";
+    ViewData["Title"] = $"{Model.Estuary.Name}";
+    ViewBag.MetaDescription = $"South African Estuary Information System  - {Model.Estuary.Name}";
+    ViewBag.MetaKeywords = $"South African Environmental Observation Network, SAEON, South African Estuary Information System, SAEIS, Estuary, {Model.Estuary.Name}";
+    if (!string.IsNullOrWhiteSpace(Model.Estuary.AlternativeName))
+    {
+        ViewBag.Metakeywords += $", {Model.Estuary.AlternativeName}";
+    }
+    if (!string.IsNullOrWhiteSpace(Model?.Estuary?.Classification.Type))
+    {
+        ViewBag.Metakeywords += $", {Model.Estuary.Classification.Type}";
+    }
 }
 <div class="row">
     <div class="col-md">
