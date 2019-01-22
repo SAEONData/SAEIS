@@ -8,6 +8,7 @@
     <Product>South African Estuary Information System (SAEIS)</Product>
     <Description>The South African Estuary Information System (SAEIS) is a web-based resource, providing details of research, monitoring and management associated with South African estuaries.</Description>
     <Copyright>© 2018-2019 South African Environmental Observation Network (SAEON)</Copyright>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

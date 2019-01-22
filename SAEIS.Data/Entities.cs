@@ -13,7 +13,11 @@ namespace SAEIS.Data
     {
         public static string YesNo(string value)
         {
-            if (value.Equals("Y", StringComparison.CurrentCultureIgnoreCase))
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+            else if (value.Equals("Y", StringComparison.CurrentCultureIgnoreCase))
             {
                 return "Yes";
             }
