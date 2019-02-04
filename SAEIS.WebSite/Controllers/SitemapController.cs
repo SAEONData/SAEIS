@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SAEIS.Data;
 using SimpleMvcSitemap;
+using SimpleMvcSitemap.Images;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +25,7 @@ namespace SAEIS.WebSite.Controllers
         }
 
         [Route("sitemap.xml")]
+        [ResponseCache(Duration = 604800)]
         public IActionResult Index()
         {
             List<SitemapNode> nodes = new List<SitemapNode>
@@ -35,9 +40,28 @@ namespace SAEIS.WebSite.Controllers
                 new SitemapNode(Url.Action("Privacy","Home")),
                 new SitemapNode(Url.Action("Researchers","Home")),
             };
-            foreach (var estuary in dbContext.Estuaries.OrderBy(i => i.Name))
+            foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
             {
-                nodes.Add(new SitemapNode(Url.Action("Index","Info",new { id = estuary.Id })));
+                var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
+                var images = new List<SitemapImage>();
+                foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Available != "No").OrderBy(i => i.Name))
+                {
+                    var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                    var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
+                    {
+                        Title = image.Name,
+                        License = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                    };
+                    images.Add(sitemapImage);
+                    //nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                }
+                node.Images = images;
+                nodes.Add(node);
+                foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Available != "No").OrderBy(i => i.Title))
+                {
+                    var uri = $"{Request.Scheme}://{Request.Host}{literature.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                    nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                }
             }
             return new SitemapProvider().CreateSitemap(new SitemapModel(nodes));
         }
