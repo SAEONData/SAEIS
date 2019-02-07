@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://saeis.saeon.ac.za/sitemap.xml
+Sitemap: https://saeis.saeon.ac.za/sitemap.xml
