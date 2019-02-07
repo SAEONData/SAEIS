@@ -18,7 +18,7 @@ namespace SAEIS.WebSite
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             using (Logging.MethodCall(GetType()))
             {
@@ -26,6 +26,7 @@ namespace SAEIS.WebSite
                 {
                     Logging.Information("Configuring services");
                     Configuration = configuration;
+                    Environment = environment;
                     Logging
                         .CreateConfiguration("Logs/SAEIS.WebSite.txt", configuration)
                         .Create();
@@ -40,6 +41,7 @@ namespace SAEIS.WebSite
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -49,6 +51,14 @@ namespace SAEIS.WebSite
                 try
                 {
                     Logging.Information("Configuring services");
+                    if (!Environment.IsDevelopment())
+                    {
+                        services.AddHttpsRedirection(options =>
+                        {
+                            options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                            options.HttpsPort = 443;
+                        });
+                    }
                     services.AddApplicationInsightsTelemetry(Configuration);
                     services.Configure<CookiePolicyOptions>(options =>
                     {
@@ -92,6 +102,7 @@ namespace SAEIS.WebSite
                     }
                     else
                     {
+                        app.UseHttpsRedirection();
                         app.UseExceptionHandler("/Home/Error");
                     }
                     app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
