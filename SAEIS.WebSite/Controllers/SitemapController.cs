@@ -44,7 +44,7 @@ namespace SAEIS.WebSite.Controllers
             {
                 var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
                 var images = new List<SitemapImage>();
-                foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Available != "No").OrderBy(i => i.Name))
+                foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
                 {
                     var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
                     var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
@@ -57,7 +57,12 @@ namespace SAEIS.WebSite.Controllers
                 }
                 node.Images = images;
                 nodes.Add(node);
-                foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Available != "No").OrderBy(i => i.Title))
+                //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                //{
+                //    var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                //    nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                //}
+                foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
                 {
                     var uri = $"{Request.Scheme}://{Request.Host}{literature.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
                     nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));

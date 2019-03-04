@@ -158,7 +158,7 @@ namespace SAEIS.WebSite.Controllers
                             SubType = i.SubType,
                             Author = i.Author,
                             Year = i.Year,
-                            Title = string.IsNullOrWhiteSpace(i.Link) ? i.Title : $"<a target='_blank' href='{i.Link.Replace("SAEDArchive", "Archive")}'>{i.Title}</a>"
+                            Title = string.IsNullOrWhiteSpace(i.Link) || !i.Link.StartsWith("\\SAEDArchive\\") ? i.Title : $"<a target='_blank' href='{i.Link.Replace("SAEDArchive", "Archive")}'>{i.Title}</a>"
                         }).ToList();
                 }
                 catch (Exception ex)
@@ -246,7 +246,7 @@ namespace SAEIS.WebSite.Controllers
                             Id = i.Id,
                             Type = i.Type,
                             SubType = i.SubType,
-                            Name = string.IsNullOrWhiteSpace(i.Link) ? i.Name : $"<a target='_blank' href='{i.Link.Replace("SAEDArchive", "Archive")}'>{i.Name}</a>",
+                            Name = string.IsNullOrWhiteSpace(i.Link) || !i.Link.StartsWith("\\SAEDArchive\\") ? i.Name : $"<a target='_blank' href='{i.Link.Replace("SAEDArchive", "Archive")}'>{i.Name}</a>",
                             Date = i.Date,
                             Source = i.Source,
                             Reference = i.Reference,

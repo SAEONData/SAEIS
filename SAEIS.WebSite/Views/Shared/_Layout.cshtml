@@ -19,9 +19,17 @@
     {
         <meta name="description" content="@ViewBag.MetaDescription" />
     }
+    else
+    {
+        <meta name="description" content="South African Estuary Information System" />
+    }
     @if (!string.IsNullOrWhiteSpace(ViewBag.MetaKeywords))
     {
         <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    }
+    else
+    {
+        <meta name="keywords" content="South African Environmental Observation Network, SAEON, South African Estuary Information System, SAEIS, Estuary" />
     }
     <title>@(ViewBag.Title == "South African Estuary Information System" || string.IsNullOrEmpty(ViewBag.Title) ? "South African Estuary Information System" : "South African Estuary Information System - " + @ViewBag.Title)</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
@@ -110,7 +118,7 @@
                     </a>
                     <br />
                     <div style="clear: both">
-                        <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SAEIS</span> is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
+                        SAEIS is licensed under a <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
                     </div>
                 </div>
                 <div class="col-6">

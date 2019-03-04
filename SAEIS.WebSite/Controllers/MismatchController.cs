@@ -41,7 +41,7 @@ namespace SAEIS.WebSite.Controllers
             GetFiles("Archive/Literature", folderLiteratures);
             // Database
             var dbLiteratures = new List<string>();
-            dbLiteratures.AddRange(_dbContext.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.Link)).Select(i => i.Link.Replace(@"\", "/").Replace("/SAEDArchive/", "Archive/")));
+            dbLiteratures.AddRange(_dbContext.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\")).Select(i => i.Link.Replace(@"\", "/").Replace("/SAEDArchive/", "Archive/")));
             // Add folders missing from database
             model.Items.AddRange(folderLiteratures.Except(dbLiteratures).OrderBy(i => i).Select(i => new MismatchItemModel { Type = "Literature", FileName = i, InDirectory = true, InDatabase = false }));
             // In directory not in database

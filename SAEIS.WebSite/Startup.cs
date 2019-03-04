@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +16,9 @@ namespace SAEIS.WebSite
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             using (Logging.MethodCall(GetType()))
@@ -39,9 +40,6 @@ namespace SAEIS.WebSite
                 }
             }
         }
-
-        public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -72,7 +70,7 @@ namespace SAEIS.WebSite
                     //var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
                     //services.AddDbContext<SAEONDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
 
-                    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                    services.AddMvc();
                     services.AddCors();
 
                     IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
@@ -93,7 +91,8 @@ namespace SAEIS.WebSite
             {
                 try
                 {
-                    Logging.Verbose("Configure: {IsDevelopment}", env.IsDevelopment());
+                    bool useHTTPS = Configuration.GetValue<bool>("UseHTTPS");
+                    Logging.Information("Development: {IsDevelopment} HTTPS: {HTTPS}", env.IsDevelopment(), useHTTPS);
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();
@@ -102,7 +101,10 @@ namespace SAEIS.WebSite
                     }
                     else
                     {
-                        app.UseHttpsRedirection();
+                        if (useHTTPS)
+                        {
+                            app.UseHttpsRedirection();
+                        }
                         app.UseExceptionHandler("/Home/Error");
                     }
                     app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
