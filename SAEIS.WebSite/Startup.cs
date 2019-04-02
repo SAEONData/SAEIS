@@ -91,6 +91,7 @@ namespace SAEIS.WebSite
             {
                 try
                 {
+                    //Logging.Information("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
                     bool useHTTPS = Configuration.GetValue<bool>("UseHTTPS");
                     Logging.Information("Development: {IsDevelopment} HTTPS: {HTTPS}", env.IsDevelopment(), useHTTPS);
                     if (env.IsDevelopment())
