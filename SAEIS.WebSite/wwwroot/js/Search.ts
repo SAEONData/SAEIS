@@ -67,7 +67,7 @@
     let map: google.maps.Map;
     let markers: google.maps.Marker[] = [];
     let mapPoints: MapPoint[];
-    let mapBounds: google.maps.LatLngBounds;
+    let mapBounds: google.maps.LatLngBounds; 
     let mapFitted: boolean = false;
 
     export function InitMap() {
