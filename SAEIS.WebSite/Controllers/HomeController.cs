@@ -41,6 +41,12 @@ namespace SAEIS.WebSite.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [Route("HowToCite")]
+        public IActionResult HowToCite()
+        {
+            return View();
+        }
+
         [Route("Links")]
         public IActionResult Links()
         {
