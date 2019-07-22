@@ -53,7 +53,7 @@ namespace SAEIS.WebSite
                     {
                         services.AddHttpsRedirection(options =>
                         {
-                            options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                            options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
                             options.HttpsPort = 443;
                         });
                     }
