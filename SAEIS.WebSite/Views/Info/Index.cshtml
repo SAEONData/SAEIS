@@ -1,4 +1,5 @@
-﻿@model SAEIS.WebSite.Models.InfoViewModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration config
+@model SAEIS.WebSite.Models.InfoViewModel
 
 @{
     ViewData["Title"] = $"{Model.Estuary.Name}";
@@ -102,7 +103,7 @@
             Info.DrawDatasetsTable();
         });
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Info.InitMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]&callback=Info.InitMap">
     </script>
 }
 

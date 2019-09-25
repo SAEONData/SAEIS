@@ -67,12 +67,12 @@
     let map: google.maps.Map;
     let markers: google.maps.Marker[] = [];
     let mapPoints: MapPoint[];
-    let mapBounds: google.maps.LatLngBounds; 
+    let mapBounds: google.maps.LatLngBounds;
     let mapFitted: boolean = false;
 
     export function InitMap() {
         let mapOpts: google.maps.MapOptions = {
-            center: new google.maps.LatLng(-30.913054, 24.669581), 
+            center: new google.maps.LatLng(-30.913054, 24.669581),
             zoom: 6,
             mapTypeId: google.maps.MapTypeId.SATELLITE
         };
