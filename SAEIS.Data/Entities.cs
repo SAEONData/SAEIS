@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace SAEIS.Data
 {
@@ -541,7 +540,7 @@ namespace SAEIS.Data
         public DbSet<IssueType> IssueTypes { get; set; }
         public DbSet<Literature> Literatures { get; set; }
         public DbSet<ManagementClassification> ManagementClassifications { get; set; }
-        public DbSet<Map>Maps { get; set; }
+        public DbSet<Map> Maps { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<PriorityForRehabilitation> PriorityForRehabilitations { get; set; }
         public DbSet<Region> Regions { get; set; }

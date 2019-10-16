@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using SAEIS.Data;
 using SAEON.Logs;
 using System;
@@ -17,9 +18,9 @@ namespace SAEIS.WebSite
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        public IWebHostEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             using (Logging.MethodCall(GetType()))
             {
@@ -85,7 +86,7 @@ namespace SAEIS.WebSite
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (Logging.MethodCall(GetType()))
             {
@@ -108,7 +109,7 @@ namespace SAEIS.WebSite
                         }
                         app.UseExceptionHandler("/Home/Error");
                     }
-                    app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                    app.UseCors();
 
                     var cachePeriod = env.IsDevelopment() ? "600" : "604800";
                     app.UseStaticFiles(new StaticFileOptions
@@ -154,13 +155,14 @@ namespace SAEIS.WebSite
                         SupportedUICultures = supportedCultures
                     });
 
-                    //app.UseMvc(routes =>
-                    //{
-                    //    routes.MapRoute(
-                    //        name: "default",
-                    //        template: "{controller=Home}/{action=Index}/{id?}");
-                    //});
-                    app.UseMvcWithDefaultRoute();
+                    app.UseRouting();
+
+                    app.UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapControllerRoute(
+                            name: "default",
+                            pattern: "{controller=Home}/{action=Index}/{id?}");
+                    });
                 }
                 catch (Exception ex)
                 {

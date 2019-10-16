@@ -15,19 +15,19 @@ namespace SAEIS.WebSite.Controllers
 {
     public class SitemapController : Controller
     {
-        private SAEISDbContext dbContext = null;
-        private readonly IHostingEnvironment env;
+        private readonly SAEISDbContext dbContext = null;
+        private readonly IWebHostEnvironment env;
 
-        public SitemapController(SAEISDbContext dbContext, IHostingEnvironment env)
+        public SitemapController(SAEISDbContext dbContext, IWebHostEnvironment env)
         {
             this.dbContext = dbContext;
             this.env = env;
         }
 
-        ~SitemapController()
-        {
-            dbContext = null;
-        }
+        //~SitemapController()
+        //{
+        //    dbContext = null;
+        //}
 
         [Route("sitemap.xml")]
         [ResponseCache(Duration = 604800)]
