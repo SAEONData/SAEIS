@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>SAEON.ico</ApplicationIcon>
     <Authors>Tim Parker-Nance</Authors>
     <Company>South African Environmental Observation Network (SAEON)</Company>
     <Product>South African Estuary Information System (SAEIS)</Product>
     <Description>The South African Estuary Information System (SAEIS) is a web-based resource, providing details of research, monitoring and management associated with South African estuaries.</Description>
-    <Copyright>© 2018-2019 South African Environmental Observation Network (SAEON)</Copyright>
-    <Version>1.0.2</Version>
+    <Copyright>Copyright © South African Environmental Observation Network (SAEON)</Copyright>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
   </ItemGroup>
 
 </Project>

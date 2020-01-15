@@ -63,7 +63,7 @@ namespace SAEIS.WebSite.Controllers
 
         private IQueryable<Estuary> GetData(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new ParameterList { { "Filters", filters } }))
+            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {
@@ -101,7 +101,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost]
         public List<EstuaryModel> GetEstuaries(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new ParameterList { { "Filters", filters } }))
+            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {
@@ -124,7 +124,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost]
         public List<MapPointModel> GetMapData(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new ParameterList { { "Filters", filters } }))
+            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {

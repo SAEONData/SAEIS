@@ -1,4 +1,5 @@
-﻿@model SAEIS.WebSite.Models.SearchViewModel
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration config
+@model SAEIS.WebSite.Models.SearchViewModel
 @{
     ViewData["Title"] = "Search";
 }
@@ -92,6 +93,6 @@
             })
         });
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXbNvnS6dybIyQ5HDqzabfQpEGvsQ2HN0&callback=Search.InitMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]&callback=Search.InitMap">
     </script>
 }
