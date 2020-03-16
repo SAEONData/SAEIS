@@ -24,11 +24,6 @@ namespace SAEIS.WebSite.Controllers
             this.env = env;
         }
 
-        //~SitemapController()
-        //{
-        //    dbContext = null;
-        //}
-
         [Route("sitemap.xml")]
         [ResponseCache(Duration = 604800)]
         public IActionResult Index()
@@ -39,17 +34,17 @@ namespace SAEIS.WebSite.Controllers
                 {
                     Logging.Verbose("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
                     List<SitemapNode> nodes = new List<SitemapNode>
-                    {
-                        new SitemapNode(Url.Action("Index","Home")),
-                        new SitemapNode(Url.Action("Index","Search")),
-                        new SitemapNode(Url.Action("About","Home")),
-                        new SitemapNode(Url.Action("Acknowledgements","Home")),
-                        new SitemapNode(Url.Action("Background","Home")),
-                        new SitemapNode(Url.Action("Contact","Home")),
-                        new SitemapNode(Url.Action("Links","Home")),
-                        new SitemapNode(Url.Action("Privacy","Home")),
-                        new SitemapNode(Url.Action("Researchers","Home")),
-                    };
+                        {
+                            new SitemapNode(Url.Action("Index","Home")),
+                            new SitemapNode(Url.Action("Index","Search")),
+                            new SitemapNode(Url.Action("About","Home")),
+                            new SitemapNode(Url.Action("Acknowledgements","Home")),
+                            new SitemapNode(Url.Action("Background","Home")),
+                            new SitemapNode(Url.Action("Contact","Home")),
+                            new SitemapNode(Url.Action("Links","Home")),
+                            new SitemapNode(Url.Action("Privacy","Home")),
+                            new SitemapNode(Url.Action("Researchers","Home")),
+                        };
                     foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
                     {
                         var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));

@@ -32,7 +32,7 @@ namespace SAEIS.WebSite
                     Logging
                         .CreateConfiguration("Logs/SAEIS.WebSite.txt", configuration)
                         .Create();
-                    Logging.Information("AppInsights: {Key}",configuration["ApplicationInsights:InstrumentationKey"]);
+                    Logging.Information("AppInsights: {Key}", configuration["ApplicationInsights:InstrumentationKey"]);
                 }
                 catch (Exception ex)
                 {
@@ -76,6 +76,8 @@ namespace SAEIS.WebSite
 
                     IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
                     services.AddSingleton<IFileProvider>(physicalProvider);
+
+                    services.AddResponseCompression();
                 }
                 catch (Exception ex)
                 {
@@ -141,6 +143,7 @@ namespace SAEIS.WebSite
                         }
                     });
                     app.UseCookiePolicy();
+                    app.UseResponseCompression();
                     var supportedCultures = new[]
                     {
                         new CultureInfo("en-GB")
