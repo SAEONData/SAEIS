@@ -5,7 +5,6 @@ using SAEIS.Data;
 using SAEON.Core;
 using SAEON.Logs;
 using SimpleMvcSitemap;
-using SimpleMvcSitemap.Images;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +24,7 @@ namespace SAEIS.WebSite.Controllers
         }
 
         [Route("sitemap.xml")]
-        [ResponseCache(Duration = 604800)]
+        //[ResponseCache(Duration = 604800)]
         public IActionResult Index()
         {
             using (Logging.MethodCall(GetType()))
@@ -48,46 +47,55 @@ namespace SAEIS.WebSite.Controllers
                     foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
                     {
                         var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
-                        var images = new List<SitemapImage>();
-                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
-                        {
-                            var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
-                            if (!System.IO.File.Exists(fileName))
-                            {
-                                Logging.Verbose("Cant find {fileName}", fileName);
-                            }
-                            else
-                            {
-                                var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
-                                var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
-                                {
-                                    Title = image.Name,
-                                    License = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                                };
-                                images.Add(sitemapImage);
-                                //nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
-                            }
-                        }
-                        node.Images = images;
-                        nodes.Add(node);
+                        //var images = new List<SitemapImage>();
                         //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
                         //{
-                        //    var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
-                        //    nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                        //    var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                        //    if (!System.IO.File.Exists(fileName))
+                        //    {
+                        //        Logging.Verbose("Cant find {fileName}", fileName);
+                        //    }
+                        //    else
+                        //    {
+                        //        var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                        //        var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
+                        //        {
+                        //            Title = image.Name,
+                        //            License = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                        //        };
+                        //        images.Add(sitemapImage);
+                        //        //nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                        //    }
                         //}
-                        foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
-                        {
-                            var fileName = Path.Combine(env.ContentRootPath, literature.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
-                            if (!System.IO.File.Exists(fileName))
-                            {
-                                Logging.Verbose("Cant find {fileName}", fileName);
-                            }
-                            else
-                            {
-                                var uri = $"{Request.Scheme}://{Request.Host}{literature.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
-                                nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
-                            }
-                        }
+                        //node.Images = images;
+                        nodes.Add(node);
+                        //foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
+                        //{
+                        //    var fileName = Path.Combine(env.ContentRootPath, literature.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                        //    if (!System.IO.File.Exists(fileName))
+                        //    {
+                        //        Logging.Verbose("Cant find {fileName}", fileName);
+                        //    }
+                        //    else
+                        //    {
+                        //        var uri = $"{Request.Scheme}://{Request.Host}{literature.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                        //        nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                        //    }
+                        //}
+                        //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        //{
+                        //    break;
+                        //    var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                        //    if (!System.IO.File.Exists(fileName))
+                        //    {
+                        //        Logging.Verbose("Cant find {fileName}", fileName);
+                        //    }
+                        //    else
+                        //    {
+                        //        var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                        //        nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                        //    }
+                        //}
                     }
                     return new SitemapProvider().CreateSitemap(new SitemapModel(nodes));
                 }
