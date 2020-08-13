@@ -5,6 +5,7 @@ using SAEIS.Data;
 using SAEON.Core;
 using SAEON.Logs;
 using SimpleMvcSitemap;
+using SimpleMvcSitemap.Images;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,11 +28,11 @@ namespace SAEIS.WebSite.Controllers
         //[ResponseCache(Duration = 604800)]
         public IActionResult Index()
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
-                    Logging.Verbose("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
+                    SAEONLogs.Verbose("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
                     List<SitemapNode> nodes = new List<SitemapNode>
                         {
                             new SitemapNode(Url.Action("Index","Home")),
@@ -47,34 +48,34 @@ namespace SAEIS.WebSite.Controllers
                     foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
                     {
                         var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
-                        //var images = new List<SitemapImage>();
-                        //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
-                        //{
-                        //    var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
-                        //    if (!System.IO.File.Exists(fileName))
-                        //    {
-                        //        Logging.Verbose("Cant find {fileName}", fileName);
-                        //    }
-                        //    else
-                        //    {
-                        //        var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
-                        //        var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
-                        //        {
-                        //            Title = image.Name,
-                        //            License = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-                        //        };
-                        //        images.Add(sitemapImage);
-                        //        //nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
-                        //    }
-                        //}
-                        //node.Images = images;
+                        var images = new List<SitemapImage>();
+                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        {
+                            var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                            if (!System.IO.File.Exists(fileName))
+                            {
+                                SAEONLogs.Verbose("Cant find {fileName}", fileName);
+                            }
+                            else
+                            {
+                                var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                                var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
+                                {
+                                    Title = image.Name,
+                                    License = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                                };
+                                images.Add(sitemapImage);
+                                //nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
+                            }
+                        }
+                        node.Images = images;
                         nodes.Add(node);
                         //foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
                         //{
                         //    var fileName = Path.Combine(env.ContentRootPath, literature.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                         //    if (!System.IO.File.Exists(fileName))
                         //    {
-                        //        Logging.Verbose("Cant find {fileName}", fileName);
+                        //        SAEONLogs.Verbose("Cant find {fileName}", fileName);
                         //    }
                         //    else
                         //    {
@@ -88,7 +89,7 @@ namespace SAEIS.WebSite.Controllers
                         //    var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                         //    if (!System.IO.File.Exists(fileName))
                         //    {
-                        //        Logging.Verbose("Cant find {fileName}", fileName);
+                        //        SAEONLogs.Verbose("Cant find {fileName}", fileName);
                         //    }
                         //    else
                         //    {
@@ -101,7 +102,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -110,7 +111,7 @@ namespace SAEIS.WebSite.Controllers
         [Route("SiteMapErrors")]
         public JsonResult SiteMapErrors()
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
@@ -138,7 +139,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }

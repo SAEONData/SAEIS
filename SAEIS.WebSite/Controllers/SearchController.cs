@@ -33,7 +33,7 @@ namespace SAEIS.WebSite.Controllers
 
         public IActionResult Index()
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
@@ -55,7 +55,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -63,7 +63,7 @@ namespace SAEIS.WebSite.Controllers
 
         private IQueryable<Estuary> GetData(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {
@@ -92,7 +92,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -101,7 +101,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost]
         public List<EstuaryModel> GetEstuaries(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {
@@ -115,7 +115,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -124,7 +124,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost]
         public List<MapPointModel> GetMapData(FilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Filters", filters } }))
             {
                 try
                 {
@@ -140,7 +140,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }

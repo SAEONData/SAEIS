@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using SAEON.Logs;
+using System;
 
 namespace SAEIS.WebSite
 {
@@ -8,16 +9,28 @@ namespace SAEIS.WebSite
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            SAEONLogs.CreateConfiguration().Initialize();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                SAEONLogs.Exception(ex);
+                throw;
+            }
+            finally
+            {
+                SAEONLogs.ShutDown();
+            }
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostContext, config) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSAEONLogs()
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
-                })
-                //.UseApplicationInsights() // Now in ConfigureServices
-                .UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }

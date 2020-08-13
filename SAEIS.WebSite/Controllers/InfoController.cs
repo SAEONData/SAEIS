@@ -41,7 +41,7 @@ namespace SAEIS.WebSite.Controllers
         [Route("Info/{id?}")]
         public IActionResult Index(int? id)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id } }))
             {
                 try
                 {
@@ -90,7 +90,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -100,7 +100,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpGet("Info/{id}/Issues")]
         public List<IssueModel> GetIssues(int id)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id } }))
             {
                 try
                 {
@@ -116,7 +116,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -125,7 +125,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost("Info/{id}/Literature")]
         public List<LiteratureModel> GetLiterature(int id, LiteratureFilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
             {
                 try
                 {
@@ -163,7 +163,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -173,7 +173,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost("Info/{id}/Maps")]
         public List<MapModel> GetMaps(int id, MapFilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
             {
                 try
                 {
@@ -206,7 +206,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -216,7 +216,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost("Info/{id}/Images")]
         public List<ImageModel> GetImages(int id, ImageFilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
             {
                 try
                 {
@@ -255,7 +255,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -265,7 +265,7 @@ namespace SAEIS.WebSite.Controllers
         [HttpPost("Info/{id}/Datasets")]
         public List<DatasetModel> GetDatasets(int id, DatasetFilterModel filters)
         {
-            using (Logging.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
+            using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id }, { "Filters", filters } }))
             {
                 try
                 {
@@ -309,7 +309,7 @@ namespace SAEIS.WebSite.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }

@@ -22,21 +22,18 @@ namespace SAEIS.WebSite
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
-                    Logging.Information("Configuring services");
+                    SAEONLogs.Information("Configuring services");
                     Configuration = configuration;
                     Environment = environment;
-                    Logging
-                        .CreateConfiguration("Logs/SAEIS.WebSite.txt", configuration)
-                        .Create();
-                    Logging.Information("AppInsights: {Key}", configuration["ApplicationInsights:InstrumentationKey"]);
+                    SAEONLogs.Information("AppInsights: {Key}", configuration["ApplicationInsights:InstrumentationKey"]);
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -45,11 +42,11 @@ namespace SAEIS.WebSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
-                    Logging.Information("Configuring services");
+                    SAEONLogs.Information("Configuring services");
                     if (!Environment.IsDevelopment())
                     {
                         services.AddHttpsRedirection(options =>
@@ -81,7 +78,7 @@ namespace SAEIS.WebSite
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
@@ -90,13 +87,13 @@ namespace SAEIS.WebSite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (Logging.MethodCall(GetType()))
+            using (SAEONLogs.MethodCall(GetType()))
             {
                 try
                 {
-                    //Logging.Information("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
+                    //SAEONLogs.Information("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
                     bool useHTTPS = Configuration.GetValue<bool>("UseHTTPS");
-                    Logging.Information("Development: {IsDevelopment} HTTPS: {HTTPS}", env.IsDevelopment(), useHTTPS);
+                    SAEONLogs.Information("Development: {IsDevelopment} HTTPS: {HTTPS}", env.IsDevelopment(), useHTTPS);
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();
@@ -169,7 +166,7 @@ namespace SAEIS.WebSite
                 }
                 catch (Exception ex)
                 {
-                    Logging.Exception(ex);
+                    SAEONLogs.Exception(ex);
                     throw;
                 }
             }
