@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using SAEON.Logs;
 using System;
+using System.IO;
 
 namespace SAEIS.WebSite
 {
@@ -28,6 +30,13 @@ namespace SAEIS.WebSite
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSAEONLogs()
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    if (File.Exists("secrets.json"))
+                    {
+                        config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
+                    }
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
