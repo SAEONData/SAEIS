@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SAEIS.WebSite.Areas.Identity.Data
+@inject SignInManager<SAEISIdentityUser> SignInManager
+@inject UserManager<SAEISIdentityUser> UserManager
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownAccount">
+        @if (SignInManager.IsSignedIn(User))
+        {
+        <a class="dropdown-item disabled" href="#">@UserManager.GetUserName(User)</a>
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage my account">Manage</a>
+            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Logout" title="Log out">Log out</a>
+        }
+        else
+        {
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Log in</a>
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        }
+    </div>
+</li>

@@ -76,7 +76,7 @@ var Search;
                 });
                 markers.push(marker);
                 mapBounds.extend(marker.getPosition());
-                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                marker.setIcon('https://maps.google.com/mapfiles/ms/icons/green-dot.png');
                 marker.addListener('click', function () {
                     window.location.href = mapPoint.url;
                 });

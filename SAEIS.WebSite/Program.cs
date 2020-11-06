@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using SAEON.Logs;
 using System;
-using System.IO;
 
 namespace SAEIS.WebSite
 {
@@ -32,10 +31,7 @@ namespace SAEIS.WebSite
                 .UseSAEONLogs()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
-                    if (File.Exists("secrets.json"))
-                    {
-                        config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
-                    }
+                    config.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

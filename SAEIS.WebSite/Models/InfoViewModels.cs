@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using System.ComponentModel;
 
 namespace SAEIS.WebSite.Models

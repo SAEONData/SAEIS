@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using SAEIS.WebSite.Models;
 using SAEON.Logs;
 using System;
@@ -10,11 +10,12 @@ using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
     public class SearchController : Controller
     {
-        private SAEISDbContext dbContext = null;
+        private SAEISContext dbContext = null;
 
-        public SearchController(SAEISDbContext dbContext)
+        public SearchController(SAEISContext dbContext)
         {
             this.dbContext = dbContext;
         }

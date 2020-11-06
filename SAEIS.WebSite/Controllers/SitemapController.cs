@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using SAEON.Core;
 using SAEON.Logs;
 using SimpleMvcSitemap;
@@ -13,12 +13,13 @@ using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
     public class SitemapController : Controller
     {
-        private readonly SAEISDbContext dbContext = null;
+        private readonly SAEISContext dbContext = null;
         private readonly IWebHostEnvironment env;
 
-        public SitemapController(SAEISDbContext dbContext, IWebHostEnvironment env)
+        public SitemapController(SAEISContext dbContext, IWebHostEnvironment env)
         {
             this.dbContext = dbContext;
             this.env = env;
@@ -49,16 +50,16 @@ namespace SAEIS.WebSite.Controllers
                     {
                         var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
                         var images = new List<SitemapImage>();
-                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
                         {
-                            var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                            var fileName = Path.Combine(env.ContentRootPath, image.LinkToImage.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                             if (!System.IO.File.Exists(fileName))
                             {
                                 SAEONLogs.Verbose("Cant find {fileName}", fileName);
                             }
                             else
                             {
-                                var uri = $"{Request.Scheme}://{Request.Host}{image.Link.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
+                                var uri = $"{Request.Scheme}://{Request.Host}{image.LinkToImage.Replace("SAEDArchive", "Archive").Replace("\\", "/")}";
                                 var sitemapImage = new SitemapImage(Uri.EscapeUriString(uri))
                                 {
                                     Title = image.Name,
@@ -118,9 +119,9 @@ namespace SAEIS.WebSite.Controllers
                     var errors = new List<string>();
                     foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
                     {
-                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
                         {
-                            var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
+                            var fileName = Path.Combine(env.ContentRootPath, image.LinkToImage.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                             if (!System.IO.File.Exists(fileName))
                             {
                                 errors.Add(fileName);

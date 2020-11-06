@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using SAEIS.WebSite.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
     public class MismatchController : Controller
     {
         private readonly IFileProvider _fileProvider;
-        private SAEISDbContext _dbContext = null;
-        public MismatchController(IFileProvider fileProvider, SAEISDbContext dbContext)
+        private readonly SAEISContext _dbContext = null;
+        public MismatchController(IFileProvider fileProvider, SAEISContext dbContext)
         {
             _fileProvider = fileProvider;
             _dbContext = dbContext;

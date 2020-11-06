@@ -1,0 +1,14 @@
+﻿@model PhotosModel
+@{
+    ViewData["Title"] = "Photos";
+}
+
+<div class="row">
+    <div class="col-md">
+        <form asp-controller="Admin" asp-action="Photos" method="post">
+            <select asp-for="Estuary" asp-items="Model.Estuaries"></select>
+            <br /><button type="submit">Load</button>
+        </form>
+    </div>
+</div>
+

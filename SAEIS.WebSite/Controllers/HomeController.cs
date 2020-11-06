@@ -1,11 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SAEIS.WebSite.Areas.Identity.Data;
 using SAEIS.WebSite.Models;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SAEIS.WebSite.Controllers
 {
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
     public class HomeController : Controller
     {
+        private readonly SignInManager<SAEISIdentityUser> signInManager;
+
+        public HomeController(SignInManager<SAEISIdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -51,6 +62,12 @@ namespace SAEIS.WebSite.Controllers
         public IActionResult Links()
         {
             return View();
+        }
+
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await signInManager.SignOutAsync();
+            return View("Index");
         }
 
         [Route("Privacy")]

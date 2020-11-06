@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using SAEIS.WebSite.Models;
 using SAEON.Logs;
 using System;
@@ -10,11 +10,12 @@ using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
+    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
     public class InfoController : Controller
     {
-        private SAEISDbContext dbContext = null;
+        private SAEISContext dbContext = null;
 
-        public InfoController(SAEISDbContext dbContext)
+        public InfoController(SAEISContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -246,7 +247,7 @@ namespace SAEIS.WebSite.Controllers
                             Id = i.Id,
                             Type = i.Type,
                             SubType = i.SubType,
-                            Name = string.IsNullOrWhiteSpace(i.Link) || !i.Link.StartsWith("\\SAEDArchive\\") ? i.Name : $"<a target='_blank' href='{i.Link.Replace("SAEDArchive", "Archive")}'>{i.Name}</a>",
+                            Name = string.IsNullOrWhiteSpace(i.LinkToImage) || !i.LinkToImage.StartsWith("\\SAEDArchive\\") ? i.Name : $"<a target='_blank' href='{i.LinkToImage.Replace("SAEDArchive", "Archive")}'>{i.Name}</a>",
                             Date = i.Date,
                             Source = i.Source,
                             Reference = i.Reference,

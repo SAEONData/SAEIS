@@ -7,11 +7,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using SAEIS.Data;
+using SAEIS.WebSite.Data;
 using SAEON.Logs;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 
 namespace SAEIS.WebSite
 {
@@ -26,7 +27,6 @@ namespace SAEIS.WebSite
             {
                 try
                 {
-                    SAEONLogs.Information("Configuring services");
                     Configuration = configuration;
                     Environment = environment;
                     SAEONLogs.Information("AppInsights: {Key}", configuration["ApplicationInsights:InstrumentationKey"]);
@@ -47,34 +47,28 @@ namespace SAEIS.WebSite
                 try
                 {
                     SAEONLogs.Information("Configuring services");
-                    if (!Environment.IsDevelopment())
-                    {
-                        services.AddHttpsRedirection(options =>
-                        {
-                            options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
-                            options.HttpsPort = 443;
-                        });
-                    }
-                    services.AddApplicationInsightsTelemetry(Configuration);
+                    services.AddApplicationInsightsTelemetry();
                     services.Configure<CookiePolicyOptions>(options =>
                     {
-                        // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
+                    services.ConfigureApplicationCookie(options =>
+                    {
+                        options.Cookie.SameSite = SameSiteMode.None;
+                    });
+                    services.AddResponseCaching();
+                    services.AddResponseCompression();
 
                     var connectionString = Configuration.GetConnectionString("SAEIS");
-                    services.AddDbContext<SAEISDbContext>(options => options.UseSqlServer(connectionString));
-                    //var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-                    //services.AddDbContext<SAEONDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
+                    var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+                    services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
 
-                    services.AddMvc();
-                    services.AddCors();
+                    services.AddControllersWithViews();
+                    services.AddRazorPages();
 
                     IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
                     services.AddSingleton<IFileProvider>(physicalProvider);
-
-                    services.AddResponseCompression();
                 }
                 catch (Exception ex)
                 {
@@ -92,8 +86,7 @@ namespace SAEIS.WebSite
                 try
                 {
                     //SAEONLogs.Information("ContentRoot: {contentRoot} WebRoot: {webRoot}", env.ContentRootPath, env.WebRootPath);
-                    bool useHTTPS = Configuration.GetValue<bool>("UseHTTPS");
-                    SAEONLogs.Information("Development: {IsDevelopment} HTTPS: {HTTPS}", env.IsDevelopment(), useHTTPS);
+                    SAEONLogs.Information("Development: {IsDevelopment}", env.IsDevelopment());
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();
@@ -102,44 +95,25 @@ namespace SAEIS.WebSite
                     }
                     else
                     {
-                        if (useHTTPS)
-                        {
-                            app.UseHttpsRedirection();
-                        }
                         app.UseExceptionHandler("/Home/Error");
                     }
-                    app.UseCors();
+                    app.UseHttpsRedirection();
 
-                    var cachePeriod = env.IsDevelopment() ? "600" : "604800";
-                    app.UseStaticFiles(new StaticFileOptions
-                    {
-                        OnPrepareResponse = ctx =>
-                        {
-                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-                        }
-                    });
+                    app.UseStaticFiles();
                     app.UseStaticFiles(new StaticFileOptions
                     {
                         FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
                         RequestPath = "/node_modules",
-                        OnPrepareResponse = ctx =>
-                        {
-                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-                        }
-
                     });
                     app.UseStaticFiles(new StaticFileOptions
                     {
                         FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
                         RequestPath = "/Archive",
-                        OnPrepareResponse = ctx =>
-                        {
-                            ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-                        }
                     });
                     app.UseCookiePolicy();
+                    app.UseResponseCaching();
                     app.UseResponseCompression();
                     var supportedCultures = new[]
                     {
@@ -156,12 +130,15 @@ namespace SAEIS.WebSite
                     });
 
                     app.UseRouting();
+                    app.UseAuthentication();
+                    app.UseAuthorization();
 
                     app.UseEndpoints(endpoints =>
                     {
                         endpoints.MapControllerRoute(
                             name: "default",
                             pattern: "{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapRazorPages();
                     });
                 }
                 catch (Exception ex)

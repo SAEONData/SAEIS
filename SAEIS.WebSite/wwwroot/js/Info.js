@@ -43,7 +43,7 @@ var Info;
             map: map,
             title: mapPoint.name
         });
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        marker.setIcon('https://maps.google.com/mapfiles/ms/icons/green-dot.png');
     }
     Info.InitMap = InitMap;
     function SetMapPoint(name, latitude, longitude) {
