@@ -109,5 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Create Data.sql" />
+    <None Include="SAEIS.Database.publish.xml" />
   </ItemGroup>
 </Project>
