@@ -343,7 +343,7 @@ namespace SAEIS.WebSite.Data
         public string Date { get; set; }
         public string LinkToImage { get; set; }
         public string LinkToHiResImage { get; set; }
-        public long HiResImageSize { get; set; }
+        public long? HiResImageSize { get; set; }
         public string Source { get; set; }
         public string Reference { get; set; }
         public string Notes { get; set; }

@@ -12,7 +12,6 @@ using SAEON.Logs;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 
 namespace SAEIS.WebSite
 {
@@ -61,8 +60,9 @@ namespace SAEIS.WebSite
                     services.AddResponseCompression();
 
                     var connectionString = Configuration.GetConnectionString("SAEIS");
-                    var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-                    services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
+                    //var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+                    //services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
+                    services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure()));
 
                     services.AddControllersWithViews();
                     services.AddRazorPages();

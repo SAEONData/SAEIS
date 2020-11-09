@@ -67,7 +67,7 @@ namespace SAEIS.WebSite.Controllers
         public async Task<IActionResult> LogoutAsync()
         {
             await signInManager.SignOutAsync();
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         [Route("Privacy")]
@@ -78,6 +78,11 @@ namespace SAEIS.WebSite.Controllers
 
         [Route("Researchers")]
         public IActionResult Researchers()
+        {
+            return View();
+        }
+
+        public IActionResult Test()
         {
             return View();
         }
