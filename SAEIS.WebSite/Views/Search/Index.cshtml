@@ -12,23 +12,23 @@
                 <form class="card-text">
                     <div class="form-group">
                         <label asp-for="Name"></label>
-                        <input asp-for="Name" class="form-control" oninput="Search.UpdateFilters()" />
+                        <input asp-for="Name" class="form-control"/>
                     </div>
                     <div class="form-group">
                         <label asp-for="Classification"></label>
-                        <select asp-for="Classification" asp-items="Model.Classifications" class="form-control" onchange="Search.UpdateFilters()"></select>
+                        <select asp-for="Classification" asp-items="Model.Classifications" class="form-control"></select>
                     </div>
                     <div class="form-group">
                         <label asp-for="Region"></label>
-                        <select asp-for="Region" asp-items="Model.Regions" class="form-control" onchange="Search.UpdateFilters()"></select>
+                        <select asp-for="Region" asp-items="Model.Regions" class="form-control"></select>
                     </div>
                     <div class="form-group">
                         <label asp-for="Condition"></label>
-                        <select asp-for="Condition" asp-items="Model.Conditions" class="form-control" onchange="Search.UpdateFilters()"></select>
+                        <select asp-for="Condition" asp-items="Model.Conditions" class="form-control"></select>
                     </div>
                     <div class="form-group">
                         <label asp-for="Province"></label>
-                        <select asp-for="Province" asp-items="Model.Provinces" class="form-control" onchange="Search.UpdateFilters()"></select>
+                        <select asp-for="Province" asp-items="Model.Provinces" class="form-control"></select>
                     </div>
                     @*<button type="button" id="btnSearch" class="btn btn-primary" onclick="Search.FixMap()">Search</button>*@
                 </form>
@@ -78,6 +78,7 @@
     <script type="module">
         import * as Search from "/js/Search.js";
         $(function () {
+            Search.SetEventListeners();
             Search.UpdateFilters();
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 if (String(e.target).endsWith("#map")) {
@@ -86,7 +87,5 @@
             })
         });
     </script>
-    <script type="module" async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]&callback=Search.InitMap">
-        import * as Search from "/js/Search.js";
-    </script>
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]"></script>
 }

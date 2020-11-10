@@ -38,12 +38,13 @@ namespace SAEIS.WebSite.Controllers
             {
                 try
                 {
-                    SelectList SelectListFrom(IQueryable<ListItem> list)
+                    List<SelectListItem> SelectListFrom(IQueryable<ListItem> list)
                     {
                         var newList = list.OrderBy(i => i.Text).ToList();
                         newList.Insert(0, new ListItem { Text = "All", IsSelected = true });
-                        return new SelectList(newList, "Id", "Text", "All");
+                        return newList.Select(i => new SelectListItem(i.Text, i.Id?.ToString())).ToList();
                     }
+
                     var model = new SearchViewModel
                     {
                         Classifications = SelectListFrom(dbContext.Classifications.Select(i => new ListItem { Id = i.Id, Text = i.Type })),
@@ -111,6 +112,8 @@ namespace SAEIS.WebSite.Controllers
                         Id = i.Id,
                         Name = $"<a href='Info/{i.Id}'>{i.Name}</a>",
                         Classification = i.Classification.Type,
+                        Region = i.Region.Category,
+                        Condition = i.Condition.Type,
                         Province = i.Province.Name
                     }).ToList();
                 }
@@ -147,9 +150,9 @@ namespace SAEIS.WebSite.Controllers
             }
         }
 
-        public IActionResult Info(int id)
-        {
-            return View();
-        }
+        //public IActionResult Info(int id)
+        //{
+        //    return View();
+        //}
     }
 }

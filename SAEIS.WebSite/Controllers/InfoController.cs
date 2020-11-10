@@ -46,11 +46,11 @@ namespace SAEIS.WebSite.Controllers
             {
                 try
                 {
-                    SelectList SelectListFrom(IQueryable<ListItem> list)
+                    List<SelectListItem> SelectListFrom(IQueryable<ListItem> list)
                     {
                         var newList = list.OrderBy(i => i.Text).ToList();
-                        newList.Insert(0, new ListItem { Text = "All", IsSelected = true });
-                        return new SelectList(newList, "Id", "Text", "All");
+                        newList.Insert(0, new ListItem { Id = "", Text = "All", IsSelected = true });
+                        return newList.Select(i => new SelectListItem(i.Text, i.Id)).ToList();
                     }
 
                     if (!id.HasValue)
@@ -79,13 +79,13 @@ namespace SAEIS.WebSite.Controllers
                     {
                         Estuary = estuary,
                         LiteratureTypes = SelectListFrom(dbContext.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.Type)).Select(i => new ListItem { Id = i.Type, Text = i.Type }).Distinct()),
-                        LiteratureSubTypes = SelectListFrom(dbContext.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.Type, Text = i.SubType }).Distinct()),
+                        LiteratureSubTypes = SelectListFrom(dbContext.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.SubType, Text = i.SubType }).Distinct()),
                         MapTypes = SelectListFrom(dbContext.Maps.Where(i => !string.IsNullOrWhiteSpace(i.Type)).Select(i => new ListItem { Id = i.Type, Text = i.Type }).Distinct()),
-                        MapSubTypes = SelectListFrom(dbContext.Maps.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.Type, Text = i.SubType }).Distinct()),
+                        MapSubTypes = SelectListFrom(dbContext.Maps.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.SubType, Text = i.SubType }).Distinct()),
                         ImageTypes = SelectListFrom(dbContext.Images.Where(i => !string.IsNullOrWhiteSpace(i.Type)).Select(i => new ListItem { Id = i.Type, Text = i.Type }).Distinct()),
-                        ImageSubTypes = SelectListFrom(dbContext.Images.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.Type, Text = i.SubType }).Distinct()),
+                        ImageSubTypes = SelectListFrom(dbContext.Images.Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.SubType, Text = i.SubType }).Distinct()),
                         DatasetTypes = SelectListFrom(dbContext.Datasets.SelectMany(i => i.DatasetVariables).Where(i => !string.IsNullOrWhiteSpace(i.Type)).Select(i => new ListItem { Id = i.Type, Text = i.Type }).Distinct()),
-                        DatasetSubTypes = SelectListFrom(dbContext.Datasets.SelectMany(i => i.DatasetVariables).Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.Type, Text = i.SubType }).Distinct())
+                        DatasetSubTypes = SelectListFrom(dbContext.Datasets.SelectMany(i => i.DatasetVariables).Where(i => !string.IsNullOrWhiteSpace(i.SubType)).Select(i => new ListItem { Id = i.SubType, Text = i.SubType }).Distinct())
                     };
                     return View(model);
                 }
@@ -221,6 +221,7 @@ namespace SAEIS.WebSite.Controllers
             {
                 try
                 {
+                    SAEONLogs.Information("Filters: {@Filters}", filters);
                     var estuary = dbContext.Estuaries.Include(i => i.EstuaryImages).ThenInclude(i => i.Image).Where(i => i.Id == id).FirstOrDefault();
                     if (estuary == null)
                     {

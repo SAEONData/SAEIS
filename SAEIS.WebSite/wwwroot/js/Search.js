@@ -1,25 +1,17 @@
-export function Test() {
-    alert("Test");
-}
+// Waiting
 export function ShowWaiting() {
     $("#modalLoading").modal("show");
 }
 export function HideWaiting() {
     $("#modalLoading").modal("hide");
 }
+// Errors
 function ErrorInFunc(method, status, error) {
     HideWaiting();
     alert("Error in " + method + " Status: " + status + " Error: " + error);
 }
 // Filter updates
 class Filters {
-    constructor() {
-        this.name = "";
-        this.classification = -1;
-        this.region = -1;
-        this.condition = -1;
-        this.province = -1;
-    }
 }
 function GetFilters() {
     const filters = new Filters();
@@ -55,11 +47,13 @@ function DrawEstuariesTable(filters) {
             const data = new google.visualization.DataTable();
             data.addColumn('number', '#');
             data.addColumn('string', 'Name');
-            data.addColumn('string', 'Province');
             data.addColumn('string', 'Classification');
+            data.addColumn('string', 'Region');
+            data.addColumn('string', 'Condition');
+            data.addColumn('string', 'Province');
             const items = json;
             for (let i = 0; i < items.length; i++) {
-                data.addRow([items[i].id, items[i].name, items[i].province, items[i].classification]);
+                data.addRow([items[i].id, items[i].name, items[i].classification, items[i].region, items[i].condition, items[i].province]);
             }
             const table = new google.visualization.Table(document.getElementById('tableEstuaries'));
             table.draw(data, { allowHtml: true, width: '100%', height: '100%', page: 'enable', pageSize: 25 });
@@ -77,6 +71,8 @@ let mapPoints;
 let mapBounds;
 let mapFitted = false;
 function UpdateMap(filters) {
+    if (!map)
+        return;
     if (!filters) {
         filters = GetFilters();
     }
@@ -125,6 +121,9 @@ export function InitMap() {
     //FitMap();
 }
 export function FitMap(override = false) {
+    if (!map) {
+        InitMap();
+    }
     if (override || (!mapFitted && (mapBounds !== null) && !mapBounds.isEmpty())) {
         map.setCenter(mapBounds.getCenter());
         map.fitBounds(mapBounds);
@@ -135,4 +134,12 @@ export function FixMap() {
     UpdateMap(GetFilters());
     FitMap(true);
     alert(map.getCenter() + " " + map.getZoom());
+}
+// Event listeners
+export function SetEventListeners() {
+    document.getElementById("Name")?.addEventListener("keyup", () => UpdateFilters());
+    document.getElementById("Classification")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Region")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Condition")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Province")?.addEventListener("change", () => UpdateFilters());
 }

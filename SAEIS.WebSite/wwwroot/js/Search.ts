@@ -1,6 +1,4 @@
-﻿export function Test() {
-    alert("Test");
-}
+﻿// Waiting
 
 export function ShowWaiting() {
     $("#modalLoading").modal("show");
@@ -10,6 +8,8 @@ export function HideWaiting() {
     $("#modalLoading").modal("hide");
 }
 
+// Errors
+
 function ErrorInFunc(method: string, status: string, error: string) {
     HideWaiting();
     alert("Error in " + method + " Status: " + status + " Error: " + error);
@@ -18,11 +18,11 @@ function ErrorInFunc(method: string, status: string, error: string) {
 // Filter updates
 
 class Filters {
-    name = "";
-    classification= -1
-    region = -1;
-    condition = -1;
-    province = -1;
+    name?: string;
+    classification?: number;
+    region?: number;
+    condition?: number;
+    province?: number;
 }
 
 function GetFilters(): Filters {
@@ -55,8 +55,10 @@ function GetFilters(): Filters {
 interface EstuaryItem {
     id: number;
     name: string;
-    province: string;
     classification: string;
+    region: string;
+    condition: string;
+    province: string;
 }
 
 function DrawEstuariesTable(filters: Filters) {
@@ -70,12 +72,14 @@ function DrawEstuariesTable(filters: Filters) {
                 const data = new google.visualization.DataTable();
                 data.addColumn('number', '#');
                 data.addColumn('string', 'Name');
-                data.addColumn('string', 'Province');
                 data.addColumn('string', 'Classification');
+                data.addColumn('string', 'Region');
+                data.addColumn('string', 'Condition');
+                data.addColumn('string', 'Province');
 
                 const items: EstuaryItem[] = json;
                 for (let i = 0; i < items.length; i++) {
-                    data.addRow([items[i].id, items[i].name, items[i].province, items[i].classification]);
+                    data.addRow([items[i].id, items[i].name, items[i].classification, items[i].region, items[i].condition, items[i].province]);
                 }
                 const table = new google.visualization.Table(document.getElementById('tableEstuaries') as Element);
                 table.draw(data, { allowHtml: true, width: '100%', height: '100%', page: 'enable', pageSize: 25 });
@@ -87,7 +91,6 @@ function DrawEstuariesTable(filters: Filters) {
 
     google.charts.load('current', { 'packages': ['table'] });
     google.charts.setOnLoadCallback(drawTable);
-
 }
 
 // Map
@@ -108,6 +111,7 @@ let mapBounds: google.maps.LatLngBounds;
 let mapFitted = false;
 
 function UpdateMap(filters: Filters) {
+    if (!map) return;
     if (!filters) {
         filters = GetFilters();
     }
@@ -159,6 +163,9 @@ export function InitMap() {
 }
 
 export function FitMap(override = false) {
+    if (!map) {
+        InitMap();
+    }
     if (override || (!mapFitted && (mapBounds !== null) && !mapBounds.isEmpty())) {
         map.setCenter(mapBounds.getCenter());
         map.fitBounds(mapBounds);
@@ -172,3 +179,12 @@ export function FixMap() {
     alert(map.getCenter() + " " + map.getZoom())
 }
 
+// Event listeners
+
+export function SetEventListeners() {
+    document.getElementById("Name")?.addEventListener("keyup", () => UpdateFilters());
+    document.getElementById("Classification")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Region")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Condition")?.addEventListener("change", () => UpdateFilters());
+    document.getElementById("Province")?.addEventListener("change", () => UpdateFilters());
+}

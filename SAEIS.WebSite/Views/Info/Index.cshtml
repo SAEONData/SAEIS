@@ -84,27 +84,22 @@
     </div>
 </div>
 @section Scripts {
-    <environment names="Development">
-        <script src="~/js/Info.js" asp-append-version="true"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="~/js/Info.js" asp-append-version="true"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    </environment>
-    <script type="text/javascript">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="module">
+        import * as Info from "/js/Info.js";
         Info.SetMapPoint('@Model.Estuary.Name',@Model.Estuary.Latitude,@Model.Estuary.Longitude);
         $(function () {
+            Info.SetEventListeners();
             Info.SetEstuaryId(@Model.Estuary.Id);
             Info.DrawIssuesTable();
             Info.DrawLiteratureTable();
             Info.DrawMapsTable();
             Info.DrawImagesTable();
             Info.DrawDatasetsTable();
+            setTimeout(Info.InitMap, 500);
         });
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]&callback=Info.InitMap">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@config["GoogleMapsAPIKey"]"></script>
 }
 

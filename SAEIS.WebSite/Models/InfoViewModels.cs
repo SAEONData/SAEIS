@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using SAEIS.WebSite.Data;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace SAEIS.WebSite.Models
@@ -9,28 +10,28 @@ namespace SAEIS.WebSite.Models
         public Estuary Estuary { get; set; }
         [DisplayName("Type")]
         public string LiteratureType { get; set; }
-        public SelectList LiteratureTypes { get; set; } = null;
+        public List<SelectListItem> LiteratureTypes { get; set; } = null;
         [DisplayName("Sub type")]
         public string LiteratureSubType { get; set; }
-        public SelectList LiteratureSubTypes { get; set; } = null;
+        public List<SelectListItem> LiteratureSubTypes { get; set; } = null;
         [DisplayName("Type")]
         public string MapType { get; set; }
-        public SelectList MapTypes { get; set; } = null;
+        public List<SelectListItem> MapTypes { get; set; } = null;
         [DisplayName("Sub type")]
         public string MapSubType { get; set; }
-        public SelectList MapSubTypes { get; set; } = null;
+        public List<SelectListItem> MapSubTypes { get; set; } = null;
         [DisplayName("Type")]
         public string ImageType { get; set; }
-        public SelectList ImageTypes { get; set; } = null;
+        public List<SelectListItem> ImageTypes { get; set; } = null;
         [DisplayName("Sub type")]
         public string ImageSubType { get; set; }
-        public SelectList ImageSubTypes { get; set; } = null;
+        public List<SelectListItem> ImageSubTypes { get; set; } = null;
         [DisplayName("Type")]
         public string DatasetType { get; set; }
-        public SelectList DatasetTypes { get; set; } = null;
+        public List<SelectListItem> DatasetTypes { get; set; } = null;
         [DisplayName("Sub type")]
         public string DatasetSubType { get; set; }
-        public SelectList DatasetSubTypes { get; set; } = null;
+        public List<SelectListItem> DatasetSubTypes { get; set; } = null;
     }
 
     public class IssueModel

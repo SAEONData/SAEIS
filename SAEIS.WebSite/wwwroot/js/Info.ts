@@ -1,4 +1,4 @@
-﻿// Errors
+﻿// Waiting
 
 export function ShowWaiting() {
     //$("#modalLoading").modal("show");
@@ -8,6 +8,7 @@ export function HideWaiting() {
     //$("#modalLoading").modal("hide");
 }
 
+// Errors
 function ErrorInFunc(method: string, status: string, error: string) {
     HideWaiting();
     alert("Error in " + method + " Status: " + status + " Error: " + error);
@@ -110,8 +111,8 @@ export function DrawIssuesTable() {
 // Literature
 
 class LiteratureFilters {
-    type = "";
-    subType = "";
+    type?: string;
+    subType?: string;
 }
 
 function GetLiteratureFilters(): LiteratureFilters {
@@ -175,8 +176,8 @@ export function UpdateLiteratureFilters() {
 // Maps
 
 class MapsFilters {
-    type = "";
-    subType = "";
+    type?: string;
+    subType?: string;
 }
 
 function GetMapsFilters(): MapsFilters {
@@ -236,17 +237,17 @@ export function UpdateMapsFilters() {
 // Images
 
 class ImagesFilters {
-    type = "";
-    subType = "";
+    type?: string;
+    subType?: string;
 }
 
 function GetImagesFilters(): ImagesFilters {
     const filters = new ImagesFilters();
-    const type = $("#ImagesType").val() as string;
+    const type = $("#ImageType").val() as string;
     if (type !== "") {
         filters.type = type;
     }
-    const subType = $("#ImagesSubType").val() as string;
+    const subType = $("#ImageSubType").val() as string;
     if (subType !== "") {
         filters.subType = subType;
     }
@@ -299,8 +300,8 @@ export function DrawImagesTable(filters: ImagesFilters) {
 // Datasets
 
 class DatasetsFilters {
-    type = "";
-    subType = "";
+    type?: string;
+    subType?: string;
 }
 
 function GetDatasetsFilters(): DatasetsFilters {
@@ -365,4 +366,16 @@ export function UpdateImagesFilters() {
     DrawImagesTable(filters);
 }
 
+// Events
+
+export function SetEventListeners() {
+    document.getElementById("DatasetType")?.addEventListener("change", () => UpdateDatasetsFilters());
+    document.getElementById("DatasetSubType")?.addEventListener("change", () => UpdateDatasetsFilters());
+    document.getElementById("ImageType")?.addEventListener("change", () => UpdateImagesFilters());
+    document.getElementById("ImageSubType")?.addEventListener("change", () => UpdateImagesFilters());
+    document.getElementById("LiteratureType")?.addEventListener("change", () => UpdateLiteratureFilters());
+    document.getElementById("LiteratureSubType")?.addEventListener("change", () => UpdateLiteratureFilters());
+    document.getElementById("MapType")?.addEventListener("change", () => UpdateMapsFilters());
+    document.getElementById("MapSubType")?.addEventListener("change", () => UpdateMapsFilters());
+}
 

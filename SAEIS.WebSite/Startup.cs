@@ -56,6 +56,7 @@ namespace SAEIS.WebSite
                     {
                         options.Cookie.SameSite = SameSiteMode.None;
                     });
+                    services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
                     services.AddResponseCaching();
                     services.AddResponseCompression();
 
@@ -113,8 +114,6 @@ namespace SAEIS.WebSite
                         RequestPath = "/Archive",
                     });
                     app.UseCookiePolicy();
-                    app.UseResponseCaching();
-                    app.UseResponseCompression();
                     var supportedCultures = new[]
                     {
                         new CultureInfo("en-GB")
@@ -130,8 +129,11 @@ namespace SAEIS.WebSite
                     });
 
                     app.UseRouting();
+                    app.UseCors("AllowAll");
+                    app.UseResponseCaching();
+                    app.UseResponseCompression();
                     app.UseAuthentication();
-                    app.UseAuthorization();
+                    //app.UseAuthorization();
 
                     app.UseEndpoints(endpoints =>
                     {

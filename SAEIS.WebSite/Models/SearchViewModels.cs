@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace SAEIS.WebSite.Models
@@ -11,31 +12,33 @@ namespace SAEIS.WebSite.Models
         public string Classification { get; set; }
 
         [DisplayName("Whitfield Classification")]
-        public SelectList Classifications { get; set; } = null;
+        public List<SelectListItem> Classifications { get; set; } = null;
 
         [DisplayName("Biogeographic Region")]
         public string Region { get; set; }
 
         [DisplayName("Biogeographic Region")]
-        public SelectList Regions { get; set; } = null;
+        public List<SelectListItem> Regions { get; set; } = null;
 
         [DisplayName("Estuary Condition")]
         public string Condition { get; set; }
 
         [DisplayName("Estuary Condition")]
-        public SelectList Conditions { get; set; } = null;
+        public List<SelectListItem> Conditions { get; set; } = null;
 
         public string Province { get; set; }
 
-        public SelectList Provinces { get; set; } = null;
+        public List<SelectListItem> Provinces { get; set; } = null;
     }
 
     public class EstuaryModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Province { get; set; }
         public string Classification { get; set; }
+        public string Region { get; set; }
+        public string Condition { get; set; }
+        public string Province { get; set; }
     }
 
     public class MapPointModel
