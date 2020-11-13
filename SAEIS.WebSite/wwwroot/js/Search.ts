@@ -166,7 +166,7 @@ export function FitMap(override = false) {
     if (!map) {
         InitMap();
     }
-    if (override || (!mapFitted && (mapBounds !== null) && !mapBounds.isEmpty())) {
+    if (override || (!mapFitted && (mapBounds) && !mapBounds.isEmpty())) {
         map.setCenter(mapBounds.getCenter());
         map.fitBounds(mapBounds);
         mapFitted = true;

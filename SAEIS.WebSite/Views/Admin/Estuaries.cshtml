@@ -1,0 +1,29 @@
+﻿@model List<EstuariesModel>
+@{
+    ViewData["Title"] = "Estuaries";
+}
+
+<div class="row">
+    <div class="col-md">
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var estuary in Model)
+                {
+                    <tr>
+                        <td scope="row">@estuary.RowNum</td>
+                        <td>@estuary.Name</td>
+                        <td><a class="btn btn-primary btn-sm" asp-action="EstuaryImages" asp-route-id="@estuary.Id">Images</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

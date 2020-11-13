@@ -73,21 +73,21 @@ namespace SAEIS.WebSite.Models
         public string SubType { get; set; }
     }
 
-    public class ImageModel
-    {
-        public int RowNum { get; set; }
-        public int Id { get; set; }
-        public string Type { get; set; }
-        public string SubType { get; set; }
-        public string Name { get; set; }
-        public string LinkToImage { get; set; }
-        public string LinkToHiResImage { get; set; }
-        public long? HiResImageSize { get; set; }
-        public string Date { get; set; }
-        public string Source { get; set; }
-        public string Reference { get; set; }
-        public string Notes { get; set; }
-    }
+    //public class ImageModel
+    //{
+    //    public int RowNum { get; set; }
+    //    public int Id { get; set; }
+    //    public string Type { get; set; }
+    //    public string SubType { get; set; }
+    //    public string Name { get; set; }
+    //    public string LinkToImage { get; set; }
+    //    public string LinkToHiResImage { get; set; }
+    //    public long? HiResImageSize { get; set; }
+    //    public string Date { get; set; }
+    //    public string Source { get; set; }
+    //    public string Reference { get; set; }
+    //    public string Notes { get; set; }
+    //}
 
     public class ImageFilterModel
     {

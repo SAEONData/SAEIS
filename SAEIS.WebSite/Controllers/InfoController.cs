@@ -130,13 +130,13 @@ namespace SAEIS.WebSite.Controllers
             {
                 try
                 {
-                    var estuary = dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Where(i => i.Id == id).FirstOrDefault();
+                    var estuary = dbContext.Estuaries.Include(i => i.Literatures.Where(i => i.Available != "N")).Where(i => i.Id == id).FirstOrDefault();
                     if (estuary == null)
                     {
                         return new List<LiteratureModel>();
                     }
 
-                    var query = estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => i.Available != "N").AsQueryable();
+                    var query = estuary.Literatures.AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);
@@ -178,12 +178,12 @@ namespace SAEIS.WebSite.Controllers
             {
                 try
                 {
-                    var estuary = dbContext.Estuaries.Include(i => i.EstuaryMaps).ThenInclude(i => i.Map).Where(i => i.Id == id).FirstOrDefault();
+                    var estuary = dbContext.Estuaries.Include(i => i.Maps.Where(i => i.Available != "N")).Where(i => i.Id == id).FirstOrDefault();
                     if (estuary == null)
                     {
                         return new List<MapModel>();
                     }
-                    var query = estuary.EstuaryMaps.Select(i => i.Map).Where(i => i.Available != "N").AsQueryable();
+                    var query = estuary.Maps.AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);
@@ -222,13 +222,13 @@ namespace SAEIS.WebSite.Controllers
                 try
                 {
                     SAEONLogs.Information("Filters: {@Filters}", filters);
-                    var estuary = dbContext.Estuaries.Include(i => i.EstuaryImages).ThenInclude(i => i.Image).Where(i => i.Id == id).FirstOrDefault();
+                    var estuary = dbContext.Estuaries.Include(i => i.Images.Where(i => i.Available != "N")).Where(i => i.Id == id).FirstOrDefault();
                     if (estuary == null)
                     {
                         return new List<ImageModel>();
                     }
 
-                    var query = estuary.EstuaryImages.Select(i => i.Image).Where(i => i.Available != "N").AsQueryable();
+                    var query = estuary.Images.AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);
@@ -272,10 +272,8 @@ namespace SAEIS.WebSite.Controllers
                 try
                 {
                     var estuary = dbContext.Estuaries
-                        .Include(i => i.EstuaryDatasets)
-                        .ThenInclude(i => i.Dataset)
+                        .Include(i => i.Datasets)
                         .ThenInclude(i => i.DatasetVariables)
-                        .ThenInclude(i => i.Dataset)
                         .Where(i => i.Id == id)
                         .FirstOrDefault();
                     if (estuary == null)
@@ -283,7 +281,7 @@ namespace SAEIS.WebSite.Controllers
                         return new List<DatasetModel>();
                     }
 
-                    var query = estuary.EstuaryDatasets.SelectMany(i => i.Dataset.DatasetVariables).AsQueryable();
+                    var query = estuary.Datasets.SelectMany(i => i.DatasetVariables).AsQueryable();
                     if (!string.IsNullOrWhiteSpace(filters?.Type))
                     {
                         query = query.Where(i => i.Type == filters.Type);

@@ -82,6 +82,7 @@ namespace SAEIS.WebSite.Data
 
         // Navigation
         public List<DatasetVariable> DatasetVariables { get; set; }
+        public List<Estuary> Estuaries { get; set; }
     }
 
     [Table("DatasetVariable")]
@@ -254,62 +255,10 @@ namespace SAEIS.WebSite.Data
         public WaterQuality WaterQuality { get; set; }
         public WaterRequirement WaterRequirement { get; set; }
         public List<Issue> Issues { get; set; }
-        public List<EstuaryLiterature> EstuaryLiteratures { get; set; }
-        public List<EstuaryMap> EstuaryMaps { get; set; }
-        public List<EstuaryImage> EstuaryImages { get; set; }
-        public List<EstuaryDataset> EstuaryDatasets { get; set; }
-    }
-
-    [Table("EstuaryDataset")]
-    public class EstuaryDataset
-    {
-        [Required]
-        public int EstuaryId { get; set; }
-        [Required]
-        public int DatasetId { get; set; }
-
-        // Navigation
-        public Estuary Estuary { get; set; }
-        public Dataset Dataset { get; set; }
-    }
-
-    [Table("EstuaryLiterature")]
-    public class EstuaryLiterature
-    {
-        [Required]
-        public int EstuaryId { get; set; }
-        [Required]
-        public int LiteratureId { get; set; }
-
-        // Navigation
-        public Estuary Estuary { get; set; }
-        public Literature Literature { get; set; }
-    }
-
-    [Table("EstuaryMap")]
-    public class EstuaryMap
-    {
-        [Required]
-        public int EstuaryId { get; set; }
-        [Required]
-        public int MapId { get; set; }
-
-        // Navigation
-        public Estuary Estuary { get; set; }
-        public Map Map { get; set; }
-    }
-
-    [Table("EstuaryImage")]
-    public class EstuaryImage
-    {
-        [Required]
-        public int EstuaryId { get; set; }
-        [Required]
-        public int ImageId { get; set; }
-
-        // Navigation
-        public Estuary Estuary { get; set; }
-        public Image Image { get; set; }
+        public List<Literature> Literatures { get; set; }
+        public List<Map> Maps { get; set; }
+        public List<Image> Images { get; set; }
+        public List<Dataset> Datasets { get; set; }
     }
 
     [Table("Geomorphology")]
@@ -335,10 +284,7 @@ namespace SAEIS.WebSite.Data
         public string Type { get; set; }
         public string SubType { get; set; }
         public string Name { get; set; }
-        [Column("Available")]
-        public string AvailableYN { get; set; }
-        [NotMapped]
-        public string Available { get => Helpers.YesNo(AvailableYN); }
+        public string Available { get; set; }
         [Column("ImageDate")]
         public string Date { get; set; }
         public string LinkToImage { get; set; }
@@ -347,6 +293,9 @@ namespace SAEIS.WebSite.Data
         public string Source { get; set; }
         public string Reference { get; set; }
         public string Notes { get; set; }
+
+        // Navigation
+        public List<Estuary> Estuaries { get; set; }
     }
 
     [Table("InfoAvailable")]
@@ -404,15 +353,12 @@ namespace SAEIS.WebSite.Data
         [Column("PublishDate")]
         public string Year { get; set; }
         public string Title { get; set; }
-        [Column("Available")]
-        public string AvailableYN { get; set; }
-        [NotMapped]
-        public string Available { get => Helpers.YesNo(AvailableYN); }
+        public string Available { get; set; }
         [Column("LinkToManuscript")]
         public string Link { get; set; }
 
         // Navigation
-        public List<EstuaryLiterature> EstuaryLiteratures { get; set; }
+        public List<Estuary> Estuaries { get; set; }
 
     }
 
@@ -438,12 +384,12 @@ namespace SAEIS.WebSite.Data
         public string SubType { get; set; }
         [Column("MapName")]
         public string Name { get; set; }
-        [Column("Available")]
-        public string AvailableYN { get; set; }
-        [NotMapped]
-        public string Available { get => Helpers.YesNo(AvailableYN); }
+        public string Available { get; set; }
         [Column("LinkToMap")]
         public string Link { get; set; }
+
+        // Navigation
+        public List<Estuary> Estuaries { get; set; }
     }
 
     [Table("PriorityForRehabilitation")]
@@ -536,4 +482,59 @@ namespace SAEIS.WebSite.Data
         // Navigation
         public List<Estuary> Estuaries { get; set; }
     }
+
+    // Many to Many
+    /*
+    [Table("EstuaryDataset")]
+    public class EstuaryDataset
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int DatasetId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Dataset Dataset { get; set; }
+    }
+
+    [Table("EstuaryImage")]
+    public class EstuaryImage
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int ImageId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Image Image { get; set; }
+    }
+
+    [Table("EstuaryLiterature")]
+    public class EstuaryLiterature
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int LiteratureId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Literature Literature { get; set; }
+    }
+
+    [Table("EstuaryMap")]
+    public class EstuaryMap
+    {
+        [Required]
+        public int EstuaryId { get; set; }
+        [Required]
+        public int MapId { get; set; }
+
+        // Navigation
+        public Estuary Estuary { get; set; }
+        public Map Map { get; set; }
+    }
+    */
 }

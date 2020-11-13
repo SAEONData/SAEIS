@@ -30,25 +30,54 @@ namespace SAEIS.WebSite.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Estuary>().Property(p => p.Latitude).HasColumnType("decimal(9,6)");
-            modelBuilder.Entity<Estuary>().Property(p => p.Longitude).HasColumnType("decimal(9,6)");
-            modelBuilder.Entity<Estuary>().Property(p => p.AreaFloodplain).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.AreaWater).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.Distance).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.LengthShoreLine).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.BiodiversityImportance).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.ScoreImportance).HasColumnType("decimal(9,3)");
-            modelBuilder.Entity<Estuary>().Property(p => p.ImportanceScoreRDM).HasColumnType("decimal(9,3)");
+            modelBuilder.Entity<Estuary>().Property(p => p.Latitude).HasPrecision(9, 6);
+            modelBuilder.Entity<Estuary>().Property(p => p.Longitude).HasPrecision(9, 6);
+            modelBuilder.Entity<Estuary>().Property(p => p.AreaFloodplain).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.AreaWater).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.Distance).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.LengthShoreLine).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.BiodiversityImportance).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.ScoreImportance).HasPrecision(9, 3);
+            modelBuilder.Entity<Estuary>().Property(p => p.ImportanceScoreRDM).HasPrecision(9, 3);
 
             // Many to Many
-            modelBuilder.Entity<EstuaryLiterature>()
-                .HasKey(el => new { el.EstuaryId, el.LiteratureId });
-            modelBuilder.Entity<EstuaryMap>()
-                .HasKey(el => new { el.EstuaryId, el.MapId });
-            modelBuilder.Entity<EstuaryImage>()
-                .HasKey(el => new { el.EstuaryId, el.ImageId });
-            modelBuilder.Entity<EstuaryDataset>()
-                .HasKey(el => new { el.EstuaryId, el.DatasetId });
+            modelBuilder.Entity<Estuary>()
+                .HasMany(e => e.Datasets)
+                .WithMany(e => e.Estuaries)
+                .UsingEntity(j =>
+                {
+                    j.Property<int>("EstuaryID").IsRequired();
+                    j.Property<int>("DatasetID").IsRequired();
+                    j.ToTable("EstuaryDataset");
+                });
+            modelBuilder.Entity<Estuary>()
+                .HasMany(e => e.Images)
+                .WithMany(e => e.Estuaries)
+                .UsingEntity(j =>
+                {
+                    j.Property<int>("EstuaryID").IsRequired();
+                    j.Property<int>("ImageID").IsRequired();
+                    j.ToTable("EstuaryImage");
+                });
+
+            modelBuilder.Entity<Estuary>()
+                .HasMany(e => e.Literatures)
+                .WithMany(e => e.Estuaries)
+                .UsingEntity(j =>
+                {
+                    j.Property<int>("EstuaryID").IsRequired();
+                    j.Property<int>("LiteratureID").IsRequired();
+                    j.ToTable("EstuaryLiterature");
+                });
+            modelBuilder.Entity<Estuary>()
+                .HasMany(e => e.Maps)
+                .WithMany(e => e.Estuaries)
+                .UsingEntity(j =>
+                {
+                    j.Property<int>("EstuaryID").IsRequired();
+                    j.Property<int>("MapID").IsRequired();
+                    j.ToTable("EstuaryMap");
+                });
         }
     }
 }

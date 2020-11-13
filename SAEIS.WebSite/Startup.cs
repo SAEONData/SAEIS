@@ -56,13 +56,11 @@ namespace SAEIS.WebSite
                     {
                         options.Cookie.SameSite = SameSiteMode.None;
                     });
-                    services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+                    //services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
                     services.AddResponseCaching();
                     services.AddResponseCompression();
 
                     var connectionString = Configuration.GetConnectionString("SAEIS");
-                    //var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-                    //services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly).EnableRetryOnFailure()));
                     services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure()));
 
                     services.AddControllersWithViews();
@@ -91,8 +89,6 @@ namespace SAEIS.WebSite
                     if (env.IsDevelopment())
                     {
                         app.UseDeveloperExceptionPage();
-                        app.UseDatabaseErrorPage();
-                        //app.UseBrowserLink();
                     }
                     else
                     {
@@ -103,14 +99,12 @@ namespace SAEIS.WebSite
                     app.UseStaticFiles();
                     app.UseStaticFiles(new StaticFileOptions
                     {
-                        FileProvider = new PhysicalFileProvider(
-                            Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "node_modules")),
                         RequestPath = "/node_modules",
                     });
                     app.UseStaticFiles(new StaticFileOptions
                     {
-                        FileProvider = new PhysicalFileProvider(
-                            Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
+                        FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
                         RequestPath = "/Archive",
                     });
                     app.UseCookiePolicy();
@@ -129,11 +123,11 @@ namespace SAEIS.WebSite
                     });
 
                     app.UseRouting();
-                    app.UseCors("AllowAll");
+                    //app.UseCors("AllowAll");
                     app.UseResponseCaching();
                     app.UseResponseCompression();
                     app.UseAuthentication();
-                    //app.UseAuthorization();
+                    app.UseAuthorization();
 
                     app.UseEndpoints(endpoints =>
                     {

@@ -46,11 +46,11 @@ namespace SAEIS.WebSite.Controllers
                             new SitemapNode(Url.Action("Privacy","Home")),
                             new SitemapNode(Url.Action("Researchers","Home")),
                         };
-                    foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
+                    foreach (var estuary in dbContext.Estuaries.Include(i => i.Literatures).Include(i => i.Images.Where(i => i.Available != "N")).OrderBy(i => i.Name))
                     {
                         var node = new SitemapNode(Url.Action("Index", "Info", new { id = estuary.Id }));
                         var images = new List<SitemapImage>();
-                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        foreach (var image in estuary.Images.Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\")).OrderBy(i => i.Name))
                         {
                             var fileName = Path.Combine(env.ContentRootPath, image.LinkToImage.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                             if (!System.IO.File.Exists(fileName))
@@ -71,7 +71,7 @@ namespace SAEIS.WebSite.Controllers
                         }
                         node.Images = images;
                         nodes.Add(node);
-                        //foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
+                        //foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "N").OrderBy(i => i.Title))
                         //{
                         //    var fileName = Path.Combine(env.ContentRootPath, literature.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                         //    if (!System.IO.File.Exists(fileName))
@@ -84,7 +84,7 @@ namespace SAEIS.WebSite.Controllers
                         //        nodes.Add(new SitemapNode(Uri.EscapeUriString(uri)));
                         //    }
                         //}
-                        //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        //foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "N").OrderBy(i => i.Name))
                         //{
                         //    break;
                         //    var fileName = Path.Combine(env.ContentRootPath, image.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
@@ -117,9 +117,9 @@ namespace SAEIS.WebSite.Controllers
                 try
                 {
                     var errors = new List<string>();
-                    foreach (var estuary in dbContext.Estuaries.Include(i => i.EstuaryLiteratures).ThenInclude(i => i.Literature).Include(i => i.EstuaryImages).ThenInclude(i => i.Image).OrderBy(i => i.Name))
+                    foreach (var estuary in dbContext.Estuaries.Include(i => i.Literatures.Where(i => i.Available != "N")).Include(i => i.Images.Where(i => i.Available != "N")).OrderBy(i => i.Name))
                     {
-                        foreach (var image in estuary.EstuaryImages.Select(i => i.Image).Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Name))
+                        foreach (var image in estuary.Images.Where(i => !string.IsNullOrWhiteSpace(i.LinkToImage) && i.LinkToImage.StartsWith("\\SAEDArchive\\")).OrderBy(i => i.Name))
                         {
                             var fileName = Path.Combine(env.ContentRootPath, image.LinkToImage.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                             if (!System.IO.File.Exists(fileName))
@@ -127,7 +127,7 @@ namespace SAEIS.WebSite.Controllers
                                 errors.Add(fileName);
                             }
                         }
-                        foreach (var literature in estuary.EstuaryLiteratures.Select(i => i.Literature).Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\") && i.Available != "No").OrderBy(i => i.Title))
+                        foreach (var literature in estuary.Literatures.Where(i => !string.IsNullOrWhiteSpace(i.Link) && i.Link.StartsWith("\\SAEDArchive\\")).OrderBy(i => i.Title))
                         {
                             var fileName = Path.Combine(env.ContentRootPath, literature.Link.Replace("SAEDArchive", "Archive").TrimStart("\\"));
                             if (!System.IO.File.Exists(fileName))
