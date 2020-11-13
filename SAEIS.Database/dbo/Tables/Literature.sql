@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Literature] (
-    [LiteratureID]        INT            NOT NULL,
+    [LiteratureID]        INT            NOT NULL Identity,
     [Type]                NVARCHAR (MAX) NULL,
     [SubType]             NVARCHAR (MAX) NULL,
     [Title]               NVARCHAR (MAX) NULL,
@@ -15,6 +15,7 @@
     [Location]            NVARCHAR (MAX) NULL,
     [University]          NVARCHAR (MAX) NULL,
     [Degree]              NVARCHAR (MAX) NULL,
-    [ReportNo]            NVARCHAR (MAX) NULL
+    [ReportNo]            NVARCHAR (MAX) NULL, 
+    CONSTRAINT [PK_Literature] PRIMARY KEY ([LiteratureID])
 );
 

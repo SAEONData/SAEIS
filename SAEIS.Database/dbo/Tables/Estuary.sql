@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Estuary] (
-    [EstuaryID]                       INT            NOT NULL,
+    [EstuaryID]                       INT            NOT NULL Identity,
     [EstuaryNum]                      INT            NULL,
     [EstuaryKZN]                      NVARCHAR (1)   NULL,
     [EstuaryName]                     NVARCHAR (MAX) NOT NULL,
@@ -72,6 +72,7 @@
     [AlienClearing]                   NVARCHAR (1)   NULL,
     [FixAppropriateBankStabilisation] NVARCHAR (1)   NULL,
     [MouthManagement]                 NVARCHAR (1)   NULL,
-    [RehabilitationComments]          NVARCHAR (MAX) NULL
+    [RehabilitationComments]          NVARCHAR (MAX) NULL, 
+    CONSTRAINT [PK_Estuary] PRIMARY KEY ([EstuaryID])
 );
 

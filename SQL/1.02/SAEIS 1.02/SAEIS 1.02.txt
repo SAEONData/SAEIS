@@ -1,4 +1,4 @@
-** Highlights
+﻿** Highlights
      Tables that will be rebuilt
        [dbo].[Dataset]
        [dbo].[Estuary]

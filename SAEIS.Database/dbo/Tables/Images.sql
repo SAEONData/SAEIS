@@ -11,6 +11,7 @@
     [Available]   NVARCHAR (1)   NULL,
     [Source]      NVARCHAR (MAX) NULL,
     [Reference]   NVARCHAR (MAX) NULL,
-    [Notes]       NVARCHAR (MAX) NULL
+    [Notes]       NVARCHAR (MAX) NULL, 
+    CONSTRAINT [PK_Images] PRIMARY KEY ([ImageID])
 );
 
