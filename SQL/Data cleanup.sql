@@ -1,3 +1,4 @@
+use SAEIS
 select Right(LinkToImage,4), count(*) from Images group by Right(LinkToImage,4)
 -- Fix )jpg
 select * from Images where Right(LinkToImage,4) = ')jpg'

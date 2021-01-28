@@ -69,7 +69,7 @@ namespace SAEIS.WebSite
                     services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure()));
 
                     services.AddControllersWithViews();
-                    //services.AddRazorPages();
+                    services.AddRazorPages();
 
                     IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
                     services.AddSingleton<IFileProvider>(physicalProvider);
@@ -144,7 +144,7 @@ namespace SAEIS.WebSite
                         //endpoints.MapControllerRoute(
                         //    name: "default",
                         //    pattern: "{controller=Home}/{action=Index}/{id?}");
-                        //endpoints.MapRazorPages();
+                        endpoints.MapRazorPages();
                     });
                 }
                 catch (Exception ex)
