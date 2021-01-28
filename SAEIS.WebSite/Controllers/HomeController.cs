@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SAEIS.WebSite.Controllers
 {
-    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
+    [ResponseCache(Duration = Defaults.CacheDuration)]
     public class HomeController : Controller
     {
         private readonly SignInManager<SAEISIdentityUser> signInManager;

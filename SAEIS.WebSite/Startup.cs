@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ using SAEON.Logs;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace SAEIS.WebSite
 {
@@ -58,13 +60,16 @@ namespace SAEIS.WebSite
                     });
                     //services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
                     services.AddResponseCaching();
-                    services.AddResponseCompression();
-
+                    services.AddResponseCompression(options =>
+                    {
+                        options.EnableForHttps = true;
+                        options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/jpg", "image/jpeg", "application/pdf" });
+                    });
                     var connectionString = Configuration.GetConnectionString("SAEIS");
                     services.AddDbContext<SAEISContext>(options => options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure()));
 
                     services.AddControllersWithViews();
-                    services.AddRazorPages();
+                    //services.AddRazorPages();
 
                     IFileProvider physicalProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory());
                     services.AddSingleton<IFileProvider>(physicalProvider);
@@ -96,6 +101,8 @@ namespace SAEIS.WebSite
                     }
                     app.UseHttpsRedirection();
 
+                    app.UseResponseCompression();
+                    app.UseResponseCaching();
                     app.UseStaticFiles();
                     app.UseStaticFiles(new StaticFileOptions
                     {
@@ -106,6 +113,10 @@ namespace SAEIS.WebSite
                     {
                         FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Archive")),
                         RequestPath = "/Archive",
+                        OnPrepareResponse = ctx =>
+                        {
+                            ctx.Context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.CacheControl] = "public,max-age=" + Defaults.CacheDuration;
+                        }
                     });
                     app.UseCookiePolicy();
                     var supportedCultures = new[]
@@ -124,17 +135,16 @@ namespace SAEIS.WebSite
 
                     app.UseRouting();
                     //app.UseCors("AllowAll");
-                    app.UseResponseCaching();
-                    app.UseResponseCompression();
                     app.UseAuthentication();
                     app.UseAuthorization();
 
                     app.UseEndpoints(endpoints =>
                     {
-                        endpoints.MapControllerRoute(
-                            name: "default",
-                            pattern: "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapRazorPages();
+                        endpoints.MapDefaultControllerRoute();
+                        //endpoints.MapControllerRoute(
+                        //    name: "default",
+                        //    pattern: "{controller=Home}/{action=Index}/{id?}");
+                        //endpoints.MapRazorPages();
                     });
                 }
                 catch (Exception ex)

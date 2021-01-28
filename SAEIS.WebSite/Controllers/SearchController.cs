@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
-    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
+    [ResponseCache(Duration = Defaults.CacheDuration)]
     public class SearchController : Controller
     {
         private SAEISContext dbContext = null;

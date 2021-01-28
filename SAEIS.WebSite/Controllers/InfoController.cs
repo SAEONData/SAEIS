@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SAEIS.WebSite.Controllers
 {
-    [ResponseCache(Duration = 60 * 60 * 24 * 7)]
+    [ResponseCache(Duration = Defaults.CacheDuration)]
     public class InfoController : Controller
     {
         private SAEISContext dbContext = null;
@@ -40,6 +40,7 @@ namespace SAEIS.WebSite.Controllers
 
 
         [Route("Info/{id?}")]
+        [ResponseCache(Duration = Defaults.CacheDuration, VaryByQueryKeys = new string[] { "id" })]
         public IActionResult Index(int? id)
         {
             using (SAEONLogs.MethodCall(GetType(), new MethodCallParameters { { "Id", id } }))
