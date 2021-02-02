@@ -319,3 +319,4 @@ Logs/
 [sS]ecrets.*.json
 [sS]ecrets.*.config
 Archive/
+SAEISIdentity.db

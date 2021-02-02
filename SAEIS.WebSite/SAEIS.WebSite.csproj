@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="SAEISIdentity.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Humanizer.Core" Version="2.8.26" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
